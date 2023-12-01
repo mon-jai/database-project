@@ -1,0 +1,46 @@
+# For connection urls to the following instances, see
+# https://github.com/prisma/prisma/blob/main/TESTING.md#environment-variables
+services:
+  node:
+    image: node:21-alpine
+    restart: unless-stopped
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/app
+    working_dir: /app
+    command: npm run dev
+
+  postgres:
+    image: postgres:16
+    restart: unless-stopped
+    # Uncomment the following line to enable query logging
+    # Then restart the container.
+    command: ["postgres", "-c", "log_statement=all"]
+    env_file: .env
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data/
+    healthcheck:
+      # specifying user and database is needed to avoid `FATAL:  role "root" does not exist`
+      # spam in the logs
+      test: ["CMD", "pg_isready", "-U", "prisma", "-d", "tests"]
+      interval: 5s
+      timeout: 2s
+      retries: 20
+
+  pgadmin:
+    image: dpage/pgadmin4:8
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: user@domain.com
+      PGADMIN_DEFAULT_PASSWORD: SuperSecret
+    ports:
+      - "5050:80"
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+
+volumes:
+  postgres-data:
+  pgadmin-data:
