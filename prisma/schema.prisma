@@ -6,14 +6,88 @@ generator client {
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  provider = "postgresql"
+  url      = env("POSTGRES_PRISMA_URL") // uses connection pooling
 }
 
-model users {
-  id        Int      @id @default(autoincrement())
-  name      String
-  email     String   @unique
-  image     String
-  createdAt DateTime @default(now())
+model User {
+  id           Int            @id @default(autoincrement())
+  created_at   DateTime       @default(now())
+  user_name    String
+  password     String
+  email        String         @unique
+  phone_number String
+  role         Role
+  user_state   String         // What does this mean?
+  permission   String         // What does this mean?
+  customer     Customer?
+  Order        Order[]
+  ShoppingCart ShoppingCart[]
+}
+
+enum Role {
+  Customer
+  Admin
+}
+
+model Customer {
+  user                         User     @relation(fields: [userId], references: [id])
+  userId                       Int      @unique
+  birthday                     DateTime
+  sex                          Sex
+  address                      String
+  security_code                String
+  credit_card_no               String
+  credit_card_security_code    String
+  credit_card_expiration_year  String
+  credit_card_expiration_month String
+}
+
+enum Sex {
+  Male
+  Female
+}
+
+model Product {
+  id           Int            @id @default(autoincrement())
+  published_at DateTime       @default(now())
+  modified_at  DateTime
+  cetegory     String
+  price        Float
+  stock        Int
+  description  String
+  images       String[]
+  order_item   OrderItem[]
+  ShoppingCart ShoppingCart[]
+}
+
+model Order {
+  id             Int         @id @default(autoincrement())
+  user           User        @relation(fields: [userId], references: [id])
+  userId         Int
+  ordered_at     DateTime    @default(now())
+  shipped_at     DateTime    @default(now())
+  payment_method String      // Isn't only credit card allowed?
+  items          OrderItem[]
+}
+
+model OrderItem {
+  product   Product @relation(fields: [productId], references: [id])
+  productId Int
+  order     Order?  @relation(fields: [orderId], references: [id])
+  orderId   Int
+  price     Float
+  quntity   Int
+
+  @@unique([productId, orderId])
+}
+
+model ShoppingCart {
+  user      User    @relation(fields: [userId], references: [id])
+  userId    Int
+  product   Product @relation(fields: [productId], references: [id])
+  productId Int
+  quntity   Int
+
+  @@unique([userId, productId])
 }
