@@ -1,6 +1,6 @@
-import prisma from "../lib/prisma"
+import prisma from "../lib/prisma.js"
 
-async function main() {
+try {
   const response = await Promise.all([
     prisma.users.upsert({
       where: { email: "rauchg@vercel.com" },
@@ -22,7 +22,7 @@ async function main() {
           "https://images.ctfassets.net/e5382hct74si/4BtM41PDNrx4z1ml643tdc/7aa88bdde8b5b7809174ea5b764c80fa/adWRdqQ6_400x400.jpg"
       }
     }),
-    await prisma.users.upsert({
+    prisma.users.upsert({
       where: { email: "stey@vercel.com" },
       update: {},
       create: {
@@ -34,13 +34,9 @@ async function main() {
     })
   ])
   console.log(response)
+} catch (e) {
+  console.error(e)
+  process.exitCode = 1
+} finally {
+  await prisma.$disconnect()
 }
-main()
-  .then(async () => {
-    await prisma.$disconnect()
-  })
-  .catch(async e => {
-    console.error(e)
-    await prisma.$disconnect()
-    process.exit(1)
-  })
