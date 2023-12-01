@@ -1,7 +1,7 @@
-import prisma from '@/lib/prisma'
-import { timeAgo } from '@/lib/utils'
-import Image from 'next/image'
-import RefreshButton from './refresh-button'
+import RefreshButton from "./refresh-button"
+import prisma from "@/lib/prisma"
+import { timeAgo } from "@/lib/utils"
+import Image from "next/image"
 
 export default async function Table() {
   const startTime = Date.now()
@@ -20,11 +20,8 @@ export default async function Table() {
         <RefreshButton />
       </div>
       <div className="divide-y divide-gray-900/5">
-        {users.map((user) => (
-          <div
-            key={user.name}
-            className="flex items-center justify-between py-3"
-          >
+        {users.map(user => (
+          <div key={user.name} className="flex items-center justify-between py-3">
             <div className="flex items-center space-x-4">
               <Image
                 src={user.image}
