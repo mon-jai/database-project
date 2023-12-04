@@ -13,8 +13,6 @@ CREATE TABLE "User" (
     "email" TEXT NOT NULL,
     "phone_number" TEXT NOT NULL,
     "role" "Role" NOT NULL,
-    "user_state" TEXT NOT NULL,
-    "permission" TEXT NOT NULL,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
@@ -24,8 +22,7 @@ CREATE TABLE "Customer" (
     "userId" INTEGER NOT NULL,
     "birthday" TIMESTAMP(3) NOT NULL,
     "sex" "Sex" NOT NULL,
-    "address" TEXT NOT NULL,
-    "security_code" TEXT NOT NULL
+    "address" TEXT NOT NULL
 );
 
 -- CreateTable
@@ -61,7 +58,6 @@ CREATE TABLE "Order" (
     "customerUserId" INTEGER NOT NULL,
     "ordered_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "shipped_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "payment_method" TEXT NOT NULL,
 
     CONSTRAINT "Order_pkey" PRIMARY KEY ("id")
 );
