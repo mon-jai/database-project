@@ -66,7 +66,7 @@ CREATE TABLE "Order" (
 CREATE TABLE "OrderItem" (
     "orderId" INTEGER NOT NULL,
     "productId" INTEGER NOT NULL,
-    "price_at_the_time" DOUBLE PRECISION NOT NULL,
+    "purchased_price" DOUBLE PRECISION NOT NULL,
     "quantity" INTEGER NOT NULL
 );
 
