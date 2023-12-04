@@ -76,12 +76,12 @@ model Order {
 }
 
 model OrderItem {
-  order             Order?  @relation(fields: [orderId], references: [id])
-  orderId           Int
-  product           Product @relation(fields: [productId], references: [id])
-  productId         Int
-  price_at_the_time Float
-  quantity          Int
+  order           Order?  @relation(fields: [orderId], references: [id])
+  orderId         Int
+  product         Product @relation(fields: [productId], references: [id])
+  productId       Int
+  purchased_price Float
+  quantity        Int
 
   @@unique([orderId, productId])
 }
