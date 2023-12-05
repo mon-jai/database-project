@@ -11,14 +11,14 @@ datasource db {
 }
 
 model User {
-  id           Int       @id @default(autoincrement())
-  created_at   DateTime  @default(now())
-  user_name    String    @unique
-  password     String
-  email        String
-  phone_number String
-  role         Role
-  customer     Customer?
+  id          Int       @id @default(autoincrement())
+  createdAt   DateTime  @default(now())
+  username    String    @unique
+  password    String
+  email       String
+  phoneNumber String
+  role        Role
+  customer    Customer?
 }
 
 enum Role {
@@ -27,14 +27,15 @@ enum Role {
 }
 
 model Customer {
-  user           User           @relation(fields: [userId], references: [id])
-  userId         Int            @unique
-  birthday       DateTime
-  sex            Sex
-  address        String
-  credit_cards   CreditCard[]
-  orders         Order[]
-  shopping_carts ShoppingCart[]
+  user          User           @relation(fields: [userId], references: [id])
+  userId        Int            @unique
+  birthday      DateTime
+  sex           Sex
+  address       String
+  creditCards   CreditCard[]
+  orders        Order[]
+  shoppingCarts ShoppingCart[]
+  coupons       Coupon[]
 }
 
 enum Sex {
@@ -43,20 +44,20 @@ enum Sex {
 }
 
 model CreditCard {
-  id               Int      @id @default(autoincrement())
-  customer         Customer @relation(fields: [customerUserId], references: [userId])
-  customerUserId   Int
-  card_no          String
-  security_code    String
-  expiration_year  String
-  expiration_month String
+  id              Int      @id @default(autoincrement())
+  customer        Customer @relation(fields: [customerUserId], references: [userId])
+  customerUserId  Int
+  cardNo          String
+  securityCode    String
+  expirationYear  String
+  expirationMonth String
 }
 
 model Product {
   id           Int            @id @default(autoincrement())
-  published_at DateTime       @default(now())
-  modified_at  DateTime       @default(now())
-  title        String
+  publishedAt  DateTime       @default(now())
+  modifiedAt   DateTime       @default(now())
+  name         String
   cetegory     String
   price        Float
   stock        Int
@@ -70,18 +71,20 @@ model Order {
   id             Int         @id @default(autoincrement())
   customer       Customer    @relation(fields: [customerUserId], references: [userId])
   customerUserId Int
-  ordered_at     DateTime    @default(now())
-  shipped_at     DateTime    @default(now())
+  orderedAt      DateTime    @default(now())
+  shippedAt      DateTime    @default(now())
   items          OrderItem[]
+  couponUsed     Coupon?     @relation(fields: [couponId], references: [id])
+  couponId       Int?
 }
 
 model OrderItem {
-  order             Order?  @relation(fields: [orderId], references: [id])
-  orderId           Int
-  product           Product @relation(fields: [productId], references: [id])
-  productId         Int
-  price_at_the_time Float
-  quantity          Int
+  order         Order?  @relation(fields: [orderId], references: [id])
+  orderId       Int
+  product       Product @relation(fields: [productId], references: [id])
+  productId     Int
+  purchasePrice Float
+  quantity      Int
 
   @@unique([orderId, productId])
 }
@@ -94,4 +97,12 @@ model ShoppingCart {
   quantity       Int
 
   @@unique([customerUserId, productId])
+}
+
+model Coupon {
+  id             Int      @id @default(autoincrement())
+  customer       Customer @relation(fields: [customerUserId], references: [userId])
+  customerUserId Int
+  discountRate   Float
+  order          Order[]
 }
