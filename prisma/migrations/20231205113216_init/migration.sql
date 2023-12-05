@@ -7,11 +7,11 @@ CREATE TYPE "Sex" AS ENUM ('Male', 'Female');
 -- CreateTable
 CREATE TABLE "User" (
     "id" SERIAL NOT NULL,
-    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "user_name" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "username" TEXT NOT NULL,
     "password" TEXT NOT NULL,
     "email" TEXT NOT NULL,
-    "phone_number" TEXT NOT NULL,
+    "phoneNumber" TEXT NOT NULL,
     "role" "Role" NOT NULL,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
@@ -29,10 +29,10 @@ CREATE TABLE "Customer" (
 CREATE TABLE "CreditCard" (
     "id" SERIAL NOT NULL,
     "customerUserId" INTEGER NOT NULL,
-    "card_no" TEXT NOT NULL,
-    "security_code" TEXT NOT NULL,
-    "expiration_year" TEXT NOT NULL,
-    "expiration_month" TEXT NOT NULL,
+    "cardNo" TEXT NOT NULL,
+    "securityCode" TEXT NOT NULL,
+    "expirationYear" TEXT NOT NULL,
+    "expirationMonth" TEXT NOT NULL,
 
     CONSTRAINT "CreditCard_pkey" PRIMARY KEY ("id")
 );
@@ -40,9 +40,9 @@ CREATE TABLE "CreditCard" (
 -- CreateTable
 CREATE TABLE "Product" (
     "id" SERIAL NOT NULL,
-    "published_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "modified_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "title" TEXT NOT NULL,
+    "publishedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "modifiedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "name" TEXT NOT NULL,
     "cetegory" TEXT NOT NULL,
     "price" DOUBLE PRECISION NOT NULL,
     "stock" INTEGER NOT NULL,
@@ -56,8 +56,9 @@ CREATE TABLE "Product" (
 CREATE TABLE "Order" (
     "id" SERIAL NOT NULL,
     "customerUserId" INTEGER NOT NULL,
-    "ordered_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "shipped_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "orderedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "shippedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "couponId" INTEGER,
 
     CONSTRAINT "Order_pkey" PRIMARY KEY ("id")
 );
@@ -66,7 +67,7 @@ CREATE TABLE "Order" (
 CREATE TABLE "OrderItem" (
     "orderId" INTEGER NOT NULL,
     "productId" INTEGER NOT NULL,
-    "purchased_price" DOUBLE PRECISION NOT NULL,
+    "purchasePrice" DOUBLE PRECISION NOT NULL,
     "quantity" INTEGER NOT NULL
 );
 
@@ -77,8 +78,17 @@ CREATE TABLE "ShoppingCart" (
     "quantity" INTEGER NOT NULL
 );
 
+-- CreateTable
+CREATE TABLE "Coupon" (
+    "id" SERIAL NOT NULL,
+    "customerUserId" INTEGER NOT NULL,
+    "discountRate" DOUBLE PRECISION NOT NULL,
+
+    CONSTRAINT "Coupon_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateIndex
-CREATE UNIQUE INDEX "User_user_name_key" ON "User"("user_name");
+CREATE UNIQUE INDEX "User_username_key" ON "User"("username");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Customer_userId_key" ON "Customer"("userId");
@@ -99,6 +109,9 @@ ALTER TABLE "CreditCard" ADD CONSTRAINT "CreditCard_customerUserId_fkey" FOREIGN
 ALTER TABLE "Order" ADD CONSTRAINT "Order_customerUserId_fkey" FOREIGN KEY ("customerUserId") REFERENCES "Customer"("userId") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "Order" ADD CONSTRAINT "Order_couponId_fkey" FOREIGN KEY ("couponId") REFERENCES "Coupon"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "OrderItem" ADD CONSTRAINT "OrderItem_orderId_fkey" FOREIGN KEY ("orderId") REFERENCES "Order"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
@@ -109,3 +122,6 @@ ALTER TABLE "ShoppingCart" ADD CONSTRAINT "ShoppingCart_customerUserId_fkey" FOR
 
 -- AddForeignKey
 ALTER TABLE "ShoppingCart" ADD CONSTRAINT "ShoppingCart_productId_fkey" FOREIGN KEY ("productId") REFERENCES "Product"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Coupon" ADD CONSTRAINT "Coupon_customerUserId_fkey" FOREIGN KEY ("customerUserId") REFERENCES "Customer"("userId") ON DELETE RESTRICT ON UPDATE CASCADE;
