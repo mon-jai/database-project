@@ -58,11 +58,11 @@ model Product {
   publishedAt  DateTime       @default(now())
   modifiedAt   DateTime       @default(now())
   name         String
-  cetegory     String
+  category     String
   price        Float
   stock        Int
   description  String
-  images       String[]
+  images       Bytes[]
   OrderItem    OrderItem[]
   ShoppingCart ShoppingCart[]
 }

@@ -43,11 +43,11 @@ CREATE TABLE "Product" (
     "publishedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "modifiedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "name" TEXT NOT NULL,
-    "cetegory" TEXT NOT NULL,
+    "category" TEXT NOT NULL,
     "price" DOUBLE PRECISION NOT NULL,
     "stock" INTEGER NOT NULL,
     "description" TEXT NOT NULL,
-    "images" TEXT[],
+    "images" BYTEA[],
 
     CONSTRAINT "Product_pkey" PRIMARY KEY ("id")
 );

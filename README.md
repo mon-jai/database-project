@@ -12,5 +12,5 @@ docker compose run node npm run build
 ## Run the app
 
 ```sh
-docker-compose up
+docker compose up
 ```
