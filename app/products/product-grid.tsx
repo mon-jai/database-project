@@ -1,3 +1,5 @@
+"use server"
+
 import prisma from "@/lib/prisma"
 import { range } from "lodash"
 import Link from "next/link"
@@ -23,7 +25,7 @@ export default async function ProductGrid({ page }: { page: number }) {
       <div>
         {range(noOfPages).map(index => (
           <Link
-            href={`/${index + 1}`}
+            href={`/products?page=${index + 1}`}
             style={index + 1 === page ? { backgroundColor: "blue" } : {}}
             suppressHydrationWarning={true}
           >
