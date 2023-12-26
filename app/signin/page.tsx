@@ -12,7 +12,7 @@ export default function App() {
     formState: { errors }
   } = useForm<User>()
 
-  const onSubmit: SubmitHandler<UserInput> = data => fetch(".", { method: "POST", body: JSON.stringify(data) })
+  const onSubmit: SubmitHandler<UserInput> = data => fetch("signin/api", { method: "POST", body: JSON.stringify(data) })
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
