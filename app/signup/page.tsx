@@ -19,15 +19,15 @@ export default function App() {
       <div>
         <span>username</span>
         <input {...register("username", { required: true })} />
-      </div>{" "}
+      </div>
       <div>
         <span>password</span>
         <input {...register("password", { required: true })} />
-      </div>{" "}
+      </div>
       <div>
         <span>email</span>
         <input {...register("email", { required: true })} />
-      </div>{" "}
+      </div>
       <div>
         <span>phoneNumber</span>
         <input {...register("phoneNumber", { required: true })} />

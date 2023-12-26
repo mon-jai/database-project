@@ -1,0 +1,1 @@
+export const IRON_SESSION_PASSWORD = process.env.IRON_SESSION_PASSWORD!
