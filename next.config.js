@@ -11,7 +11,7 @@ const nextConfig = {
       poll: 10,
       aggregateTimeout: 10
     }
-  })
+  }),
 }
 
 export default nextConfig

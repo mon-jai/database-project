@@ -1,14 +1,10 @@
-"use client"
 import ProductGrid from "@/app/products/product-grid"
 import TablePlaceholder from "@/app/products/table-placeholder"
-import { useSearchParams } from "next/navigation"
 import { Suspense } from "react"
 
 export const dynamic = "force-dynamic"
 
-export default function Products() {
-  const page = useSearchParams().get("page") ?? "0"
-
+export default function Products({ searchParams: { page = "0" } }: { searchParams: { page: string } }) {
   return (
     <>
       <Suspense fallback={<TablePlaceholder />}>

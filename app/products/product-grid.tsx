@@ -1,5 +1,3 @@
-"use server"
-
 import prisma from "@/lib/prisma"
 import { range } from "lodash"
 import Link from "next/link"
