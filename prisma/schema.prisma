@@ -17,6 +17,7 @@ model User {
   password    String
   email       String
   phoneNumber String
+  avatar      String
   role        Role
   customer    Customer?
 }
@@ -62,7 +63,7 @@ model Product {
   price        Float
   stock        Int
   description  String
-  images       Bytes[]
+  images       String[]
   OrderItem    OrderItem[]
   ShoppingCart ShoppingCart[]
 }

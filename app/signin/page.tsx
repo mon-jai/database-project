@@ -1,6 +1,7 @@
 "use client"
 
 import type { User } from ".prisma/client"
+import { redirect } from "next/navigation"
 import { SubmitHandler, useForm } from "react-hook-form"
 
 type UserInput = Pick<User, "username" | "password">
@@ -9,10 +10,15 @@ export default function App() {
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors }
-  } = useForm<User>()
+  } = useForm<UserInput>()
 
-  const onSubmit: SubmitHandler<UserInput> = data => fetch("signin/api", { method: "POST", body: JSON.stringify(data) })
+  const onSubmit: SubmitHandler<UserInput> = async data => {
+    const response = await fetch("signin/api", { method: "POST", body: JSON.stringify(data) })
+    if (response.status === 200) redirect("/")
+    else setError("password", await response.json())
+  }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
