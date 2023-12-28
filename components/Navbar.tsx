@@ -1,6 +1,5 @@
-import { getUserFromSession } from "@/lib/utils";
-import Link from "next/link";
-
+import { getUserFromSession } from "@/lib/utils"
+import Link from "next/link"
 
 function NavbarButton({ icon, label, href }: { icon: string; label: string; href: string }) {
   return (

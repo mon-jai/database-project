@@ -1,8 +1,7 @@
-"use client";
+"use client"
 
-import type { User } from ".prisma/client";
-import { SubmitHandler, useForm } from "react-hook-form";
-
+import type { User } from ".prisma/client"
+import { SubmitHandler, useForm } from "react-hook-form"
 
 type UserToCreate = Omit<User, "id" | "createdAt" | "role">
 type UserInput = UserToCreate & { avatar: FileList }

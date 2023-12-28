@@ -1,7 +1,7 @@
+import { RemoveButton } from "./RemoveButton"
 import prisma from "@/lib/prisma"
 import { getUserFromSession } from "@/lib/utils"
 import { redirect } from "next/navigation"
-import { RemoveButton } from "./RemoveButton"
 
 export default async function () {
   const customerUserId = (await getUserFromSession({ select: { id: true } }))?.id
