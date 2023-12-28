@@ -19,8 +19,6 @@ export async function POST(request: Request) {
       return Response.json({ username: "user not found" }, { status: 401 })
     } else if (error === AUTHENTICATION_ERRORS.INCORRECT_PASSWORD) {
       return Response.json({ password: "Incorrect password" }, { status: 401 })
-    } else {
-      return new Response("", { status: 500 })
     }
   }
 }

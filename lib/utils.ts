@@ -31,7 +31,5 @@ export async function getUserFromSession(props: Prisma.UserFindFirstArgs) {
 }
 
 export async function getRoleFromSession() {
-  const username = (await getSession()).username
-  const role = (await prisma.user.findFirst({ where: { username }, select: { role: true } }))?.role
-  return role
+  return (await getUserFromSession({ select: { role: true } }))?.role
 }
