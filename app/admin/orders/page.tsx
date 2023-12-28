@@ -1,5 +1,5 @@
 // TODO
 
 export default function () {
-  return <div>Admin</div>
+  return <div>Admin / Orders</div>
 }

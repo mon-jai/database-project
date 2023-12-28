@@ -15,7 +15,7 @@ export default function App() {
   } = useForm<UserInput>()
 
   const onSubmit: SubmitHandler<UserInput> = async data => {
-    const response = await fetch("signin/api", { method: "POST", body: JSON.stringify(data) })
+    const response = await fetch("/users/signin/api", { method: "POST", body: JSON.stringify(data) })
     if (response.status === 200) redirect("/")
     else setError("password", await response.json())
   }

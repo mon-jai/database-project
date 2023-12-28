@@ -1,16 +1,41 @@
-import { getUserFromSession } from "@/lib/utils"
-import Link from "next/link"
+import { getUserFromSession } from "@/lib/utils";
+import Link from "next/link";
 
-const buttonStyle = {
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  padding: "0.5rem",
-  aspectRatio: "1 / 1"
+
+function NavbarButton({ icon, label, href }: { icon: string; label: string; href: string }) {
+  return (
+    <Link href={href}>
+      <div style={{ padding: "0.5rem" }}>
+        <span
+          className="material-symbols-outlined"
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            padding: "0.5rem",
+            aspectRatio: "1 / 1"
+          }}
+        >
+          {icon}
+        </span>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            padding: "0.5rem",
+            aspectRatio: "1 / 1"
+          }}
+        >
+          {label}
+        </div>
+      </div>
+    </Link>
+  )
 }
 
 export default async function Navbar() {
-  const user = await getUserFromSession({ avatar: true })
+  const user = await getUserFromSession({ select: { avatar: true } })
 
   return (
     <div
@@ -19,24 +44,30 @@ export default async function Navbar() {
       <div className="container" style={{ display: "flex", justifyContent: "space-between" }}>
         <div style={{ fontSize: "32px", color: "#59ab6e", fontWeight: "500" }}>網路商店</div>
         <div style={{ height: "48px", display: "flex" }}>
-          <span className="material-symbols-outlined" style={buttonStyle}>
-            search
-          </span>
-          <span className="material-symbols-outlined" style={buttonStyle}>
-            shopping_cart
-          </span>
-          <span className="material-symbols-outlined" style={buttonStyle}>
-            order_approve
-          </span>
+          <NavbarButton icon="search" label="Search" href="/search" />
+          <NavbarButton icon="shopping_cart" label="Search" href="/search" />
+          <NavbarButton icon="order_approve" label="Search" href="/search" />
+
           {user ? (
-            <div style={{ ...buttonStyle, marginRight: "-0.5rem" }}>
-              <img
-                src={user.avatar}
-                style={{ width: "100%", height: "100%", borderRadius: "1000px", objectFit: "cover" }}
-              />
-            </div>
+            <>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  aspectRatio: "1 / 1",
+                  marginRight: "-0.5rem"
+                }}
+              >
+                <img
+                  src={user.avatar}
+                  style={{ width: "100%", height: "100%", borderRadius: "1000px", objectFit: "cover" }}
+                />
+              </div>
+              <NavbarButton icon="signout" label="signout" href="/search" />
+            </>
           ) : (
-            <Link href="/signin" />
+            <NavbarButton icon="signin" label="signin" href="/search" />
           )}
         </div>
       </div>

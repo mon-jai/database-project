@@ -24,12 +24,10 @@ export async function getSession() {
   })
 }
 
-export async function getUserFromSession<T extends keyof User>(select?: { [K in T]: true }): Promise<Pick<
-  User,
-  T
-> | null> {
-  const username = (await getSession()).username
-  return await prisma.user.findFirst({ where: { username }, ...(select !== undefined ? { select } : {}) })
+export async function getUserFromSession(props: Prisma.UserFindFirstArgs) {
+  props.where ??= {}
+  props.where.username = (await getSession()).username
+  return await prisma.user.findFirst(props)
 }
 
 export async function getRoleFromSession() {
