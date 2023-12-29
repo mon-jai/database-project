@@ -8,5 +8,5 @@ export async function middleware() {
 }
 
 export const config = {
-  matcher: "/admin/*"
+  matcher: "/admin/(.*)"
 }

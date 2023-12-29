@@ -8,13 +8,11 @@ const inter = Inter({
   display: "swap"
 })
 
+export const dynamic = "force-dynamic"
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <link
-        rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
-      />
       <body className={inter.variable}>
         <Navbar />
         <div className="container" style={{ marginTop: "3rem" }}>
