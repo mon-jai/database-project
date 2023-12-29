@@ -15,22 +15,27 @@ export default function App() {
   } = useForm<UserInput>()
 
   const onSubmit: SubmitHandler<UserInput> = async data => {
-    const response = await fetch("/users/signin/api", { method: "POST", body: JSON.stringify(data) })
+    const response = await fetch("/api/signin", { method: "POST", body: JSON.stringify(data) })
     if (response.status === 200) redirect("/")
-    else setError("password", await response.json())
+    else {
+      const errors = response.json()
+      for (const [name, message] of Object.entries(errors)) {
+        setError(name as keyof UserInput, { message: message })
+      }
+    }
   }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div>
-        <span>username</span>
+        <span>Username</span>
         <input {...register("username", { required: true })} />
       </div>
       <div>
-        <span>password</span>
+        <span>Password</span>
         <input {...register("password", { required: true })} />
       </div>
-      {Object.keys(errors).length > 0 && <div>This field is required</div>}
+      {Object.keys(errors).length > 0 && <div>error.message</div>}
       <input type="submit" />
     </form>
   )

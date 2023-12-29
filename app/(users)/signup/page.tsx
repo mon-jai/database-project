@@ -1,7 +1,9 @@
-"use client"
+"use client";
 
-import type { User } from ".prisma/client"
-import { SubmitHandler, useForm } from "react-hook-form"
+import type { User } from ".prisma/client";
+import { redirect } from "next/navigation";
+import { SubmitHandler, useForm } from "react-hook-form";
+
 
 type UserToCreate = Omit<User, "id" | "createdAt" | "role">
 type UserInput = UserToCreate & { avatar: FileList }
@@ -18,6 +20,7 @@ export default function App() {
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors }
   } = useForm<UserInput>()
 
@@ -26,7 +29,9 @@ export default function App() {
       ...data,
       avatar: await toBase64(data.avatar[0])
     }
-    await fetch("/users/api", { method: "POST", body: JSON.stringify(user) })
+
+    const response = await fetch("api/users", { method: "POST", body: JSON.stringify(user) })
+    if (response.status === 200) redirect("/")
   }
 
   return (
