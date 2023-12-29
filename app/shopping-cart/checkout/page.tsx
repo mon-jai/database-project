@@ -1,23 +1,27 @@
-import prisma from "@/lib/prisma"
-import { notFound } from "next/navigation"
+import prisma from "@/lib/prisma";
+import { getUserFromSession } from "@/lib/utils";
+import { notFound, redirect } from "next/navigation";
+
 
 // TODO
 // TODO: Redirect if no credit card
 export default async function ({ params: { id } }: { params: { id: string } }) {
-  const product = await prisma.product.findUnique({ where: { id: parseInt(id) } })
-  if (product === null) return notFound()
+  const user = (await getUserFromSession({ select: {id: true}, include: { customer: { include: { creditCards: true , coupons: true} } } }))
+    if (user === null) return redirect("/")
+
+  const product = await prisma.shoppingCart.findMany({ where: { customerUserId: user.id  } })
+
+  const creditCards = user.customer!.creditCards
+  const coupons = user.customer!.coupons
+
+  if (creditCards === undefined || creditCards.length === 0) {
+    alert("You need to add a credit card before placing orders.")
+    return redirect("/edit-user-info")
+  }
 
   return (
     <div>
-      <div>{product.name}</div>
-      <div>{product.modifiedAt.toString()}</div>
-      <div>{product.category}</div>
-      <div>{product.price}</div>
-      <div>{product.stock}</div>
-      <div>{product.description}</div>
-      {product.images.map(image => (
-        <img src={image} />
-      ))}
+
     </div>
   )
 }

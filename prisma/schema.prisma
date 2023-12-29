@@ -52,6 +52,7 @@ model CreditCard {
   securityCode    String
   expirationYear  String
   expirationMonth String
+  Order           Order[]
 }
 
 model Product {
@@ -73,8 +74,10 @@ model Order {
   customer       Customer    @relation(fields: [customerUserId], references: [userId])
   customerUserId Int
   orderedAt      DateTime    @default(now())
-  shippedAt      DateTime    @default(now())
+  shippedAt      DateTime?
   items          OrderItem[]
+  creditCard     CreditCard  @relation(fields: [creditCardId], references: [id])
+  creditCardId   Int
   couponUsed     Coupon?     @relation(fields: [couponId], references: [id])
   couponId       Int?
 }
