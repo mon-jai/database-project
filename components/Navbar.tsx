@@ -40,13 +40,24 @@ function NavbarButton(props: { label: string; href: string } & ({ icon: string }
 
 export default async function Navbar() {
   const user = await getUserFromSession({ select: { username: true, avatar: true } })
-  const session = await getSession()
+
   return (
     <div
       style={{ padding: "1rem 0", boxShadow: "0 0.5rem 1rem rgba(0,0,0,0.15), inset 0 -1px 0 rgba(255,255,255,0.15)" }}
     >
       <div className="container" style={{ height: "48px", display: "flex" }}>
-        <div style={{ fontSize: "32px", color: "#59ab6e", fontWeight: "500", marginRight: "0.5rem" }}>網路商店</div>
+        <Link
+          href="/"
+          style={{
+            fontSize: "32px",
+            color: "#59ab6e",
+            fontWeight: "500",
+            textDecoration: "none",
+            marginRight: "2rem"
+          }}
+        >
+          網路商店
+        </Link>
         <div style={{ display: "flex", marginRight: "auto" }}>
           <NavbarButton icon="shopping_cart" label="Shopping Cart" href="/shopping-cart" />
           <NavbarButton icon="order_approve" label="Orders" href="/orders" />

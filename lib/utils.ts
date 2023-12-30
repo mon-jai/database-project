@@ -30,7 +30,9 @@ export async function getUserFromSession<T extends Prisma.UserFindFirstArgs>(
   const username = (await getSession()).username
   if (username === undefined) return null
 
-  props.where!.username = username
+  props.where ??= {}
+  props.where.username = username
+
   // @ts-expect-error
   return prisma.user.findFirst(props)
 }
