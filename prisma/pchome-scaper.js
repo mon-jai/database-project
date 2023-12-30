@@ -59,21 +59,15 @@ const fetchQueue = queue(async productUrl => {
   console.log(`${logPrefix} ${fetchedCount + 1} / ${productUrls.length}${logSuffix}`)
 
   if (!errorOccurred && fetchedCount === MAX_ITEM_TO_FETCH) {
-    console.log("a")
-
     const products = (await Promise.all(productPromises))
       .slice(0, MAX_ITEM_TO_FETCH)
       .map((product, index) => ({ id: index, ...product }))
     await writeFile(outputPath, JSON.stringify(products))
 
-    console.log("b")
-
     fetchQueue.pause()
     fetchQueue.kill()
 
     await browser.close()
-
-    console.log("c")
   }
 
   await page.close()
