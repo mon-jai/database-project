@@ -5,6 +5,8 @@ import { fileURLToPath } from "url"
 import { queue } from "async"
 import puppeteer from "puppeteer"
 
+const MAX_ITEM_TO_FETCH = 100
+
 const sleep = ms => new Promise(r => setTimeout(r, ms))
 
 const fetchImages = imageUrls =>
@@ -28,17 +30,15 @@ const productPromises = []
 let fetchedCount = 0
 
 const fetchQueue = queue(async productUrl => {
-  const page = await browser.newPage()
-  const localFetchCount = fetchedCount++
   let errorOccurred = false
 
   try {
+    const page = await browser.newPage()
     await page.goto(productUrl)
     await sleep(5000)
 
     const imageUrls = await page.$$eval(".c-radiusPhotoImage:first-child img", imgs => imgs.map(img => img.src))
     const product = {
-      id: localFetchCount,
       name: await page.$eval(".o-prodMainName", el => el.innerText),
       category: await page.$eval(".c-tagLink", el => el.innerText.substring(1)),
       price: parseFloat(await page.$eval(".o-prodPrice__price", el => el.innerText.replaceAll(/[\$,]/g, ""))),
@@ -48,35 +48,30 @@ const fetchQueue = queue(async productUrl => {
 
     productPromises.push(fetchImages(imageUrls).then(images => ({ ...product, images })))
   } catch (e) {
-    fetchedCount--
     errorOccurred = true
   }
 
   const logPrefix = !errorOccurred ? "Fetched products:" : "Error:           "
   const logSuffix = !errorOccurred ? "" : `, ${productUrl}`
-  console.log(`${logPrefix} ${localFetchCount + 1} / ${productUrls.length}${logSuffix}`)
+  console.log(`${logPrefix} ${fetchedCount + 1} / ${productUrls.length}${logSuffix}`)
 
-  console.log({
-    errorOccurred,
-    localFetchCount,
-    a: !errorOccurred,
-    b: localFetchCount === 5,
-    c: !errorOccurred && localFetchCount === 100
-  })
-  if (!errorOccurred && localFetchCount === 5) {
-    console.log("a")
-    const products = await Promise.all(productPromises).sort((a, b) => a.id - b.id)
-    await writeFile(outputPath, JSON.stringify(products))
+  if (!errorOccurred) fetchedCount++
 
+  if (!errorOccurred && fetchedCount === MAX_ITEM_TO_FETCH) {
     fetchQueue.pause()
     fetchQueue.kill()
+
     await browser.close()
-    console.log("b")
+
+    const products = (await Promise.all(productPromises))
+      .slice(0, MAX_ITEM_TO_FETCH)
+      .map((product, index) => ({ id: index, ...product }))
+    await writeFile(outputPath, JSON.stringify(products))
   }
 
   await page.close()
   // Avoid hitting rate limit
   await sleep(3000)
-}, 3)
+}, 5)
 await fetchQueue.push(productUrls)
 await fetchQueue.drain()
