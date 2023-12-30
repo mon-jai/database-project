@@ -1,23 +1,10 @@
-import { range } from "lodash-es"
-
 import prisma from "../lib/prisma.js"
+import _products from "./products.json" with { "type": "json" }
+
+const products = _products as any as Parameters<typeof prisma.product.create>[0]["data"][]
 
 try {
-  const response = await Promise.all(
-    range(100).map(index =>
-      prisma.product.create({
-        data: {
-          id: index,
-          name: `Product ${index}`,
-          category: "",
-          price: index * 100,
-          stock: 10,
-          description: `Description ${index}`,
-          images: []
-        }
-      })
-    )
-  )
+  const response = await Promise.all(products.map(product => prisma.product.create({ data: product })))
   console.log(response)
 } catch (e) {
   console.error(e)

@@ -7,7 +7,7 @@ import puppeteer from "puppeteer"
 
 const MAX_ITEM_TO_FETCH = 100
 
-const sleep = ms => new Promise(r => setTimeout(r, ms))
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 const fetchImages = imageUrls =>
   Promise.all(
@@ -34,6 +34,7 @@ const fetchQueue = queue(async productUrl => {
 
   try {
     const page = await browser.newPage()
+
     await page.goto(productUrl)
     await sleep(5000)
 
@@ -47,6 +48,8 @@ const fetchQueue = queue(async productUrl => {
     }
 
     productPromises.push(fetchImages(imageUrls).then(images => ({ ...product, images })))
+
+    fetchedCount++
   } catch (e) {
     errorOccurred = true
   }
@@ -55,23 +58,27 @@ const fetchQueue = queue(async productUrl => {
   const logSuffix = !errorOccurred ? "" : `, ${productUrl}`
   console.log(`${logPrefix} ${fetchedCount + 1} / ${productUrls.length}${logSuffix}`)
 
-  if (!errorOccurred) fetchedCount++
-
   if (!errorOccurred && fetchedCount === MAX_ITEM_TO_FETCH) {
-    fetchQueue.pause()
-    fetchQueue.kill()
-
-    await browser.close()
+    console.log("a")
 
     const products = (await Promise.all(productPromises))
       .slice(0, MAX_ITEM_TO_FETCH)
       .map((product, index) => ({ id: index, ...product }))
     await writeFile(outputPath, JSON.stringify(products))
+
+    console.log("b")
+
+    fetchQueue.pause()
+    fetchQueue.kill()
+
+    await browser.close()
+
+    console.log("c")
   }
 
   await page.close()
   // Avoid hitting rate limit
   await sleep(3000)
-}, 5)
+}, 3)
 await fetchQueue.push(productUrls)
 await fetchQueue.drain()
