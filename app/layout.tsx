@@ -15,9 +15,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className={inter.variable}>
         <Navbar />
-        <div className="container" style={{ marginTop: "3rem" }}>
+        <div className="container mb-5" style={{ marginTop: "3rem" }}>
           {children}
         </div>
+        <footer className="text-body-secondary bg-body-tertiary py-5">
+          <div className="container">
+            <p className="mb-1">© 2024 網路商店</p>
+            <p className="mb-0">
+              <a href="/">Contact us</a> or{" "}
+              <a href="/">follow our Instagram</a>.
+            </p>
+          </div>
+        </footer>
       </body>
     </html>
   )

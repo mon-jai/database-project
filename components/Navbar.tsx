@@ -46,16 +46,7 @@ export default async function Navbar() {
       style={{ padding: "1rem 0", boxShadow: "0 0.5rem 1rem rgba(0,0,0,0.15), inset 0 -1px 0 rgba(255,255,255,0.15)" }}
     >
       <div className="container" style={{ height: "48px", display: "flex" }}>
-        <Link
-          href="/"
-          style={{
-            fontSize: "32px",
-            color: "#59ab6e",
-            fontWeight: "500",
-            textDecoration: "none",
-            marginRight: "2rem"
-          }}
-        >
+        <Link href="/" style={{ textDecoration: "none", marginRight: "2rem" }} className="fw-bold fs-2 text-success">
           網路商店
         </Link>
         <div style={{ display: "flex", marginRight: "auto" }}>

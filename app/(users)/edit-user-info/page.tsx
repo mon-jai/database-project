@@ -1,12 +1,12 @@
 import prisma from "@/lib/prisma"
 import { getSession } from "@/lib/utils"
 
-export async function GET() {
+export default async function () {
   const username = (await getSession()).username
   const user = await prisma.user.findFirst({
     where: { username },
     select: { username: true, password: true, email: true, phoneNumber: true }
   })
 
-  return Response.json(user)
+  return <div>{JSON.stringify(user)} </div>
 }
