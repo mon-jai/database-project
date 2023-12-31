@@ -2,9 +2,11 @@ import prisma from "@/lib/prisma"
 import { range } from "lodash"
 import Link from "next/link"
 
-const PRODUCTS_PER_PAGE = 9
+const PRODUCTS_PER_PAGE = 12
 
 export const dynamic = "force-dynamic"
+
+const COLUMNS_PER_ROW = 4
 
 export default async function Products({
   searchParams: { page: pageString = "0" }
@@ -24,15 +26,19 @@ export default async function Products({
       <div className="row" style={{ gap: "1rem" }}>
         {products.map(product => (
           <Link
-            href={`product/${product.id}`}
+            href={`products/${product.id}`}
             key={product.id}
             className="card px-0 shadow-sm"
-            style={{ overflow: "hidden", width: "calc(100% / 3 - 1rem * (2 / 3))", textDecoration: "none" }}
+            style={{
+              overflow: "hidden",
+              width: `calc(100% / ${COLUMNS_PER_ROW} - 1rem * (${COLUMNS_PER_ROW - 1} / ${COLUMNS_PER_ROW}))`,
+              textDecoration: "none"
+            }}
           >
             <img src={product.images[0]} />
-            <div className="card-body">
-              <p className="card-text fw-semibold">{product.name}</p>
 
+            <div className="card-body d-flex flex-column">
+              <p className="card-text fw-semibold">{product.name}</p>
               <p
                 className="card-text"
                 style={{
@@ -42,8 +48,7 @@ export default async function Products({
               >
                 {product.description}
               </p>
-
-              <p className="text-success fs-4 text-end">${product.price}</p>
+              <div className="text-success fs-4 text-end mt-auto">${product.price}</div>
             </div>
           </Link>
         ))}

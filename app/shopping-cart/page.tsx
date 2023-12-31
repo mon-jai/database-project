@@ -15,7 +15,7 @@ export default async function () {
       <div>Shopping Cart</div>
 
       {products.map(product => (
-        <div>
+        <div key={product.id}>
           <img src={product.images[0]} />
           <div>{product.name}</div>
           <div>{product.price}</div>

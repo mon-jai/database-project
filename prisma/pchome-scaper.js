@@ -38,7 +38,10 @@ const fetchQueue = queue(async productUrl => {
     await page.goto(productUrl)
     await sleep(5000)
 
-    const imageUrls = await page.$$eval(".c-radiusPhotoImage:first-child img", imgs => imgs.map(img => img.src))
+    const imageUrls = [
+      ...(await page.$$eval(".c-radiusPhotoImage:first-child img", imgs => imgs.map(img => img.src))),
+      ...(await page.$$eval(".c-prodFeature__center > img", imgs => imgs.map(img => img.src)))
+    ].slice(0, 3)
     const product = {
       name: await page.$eval(".o-prodMainName", el => el.innerText),
       category: await page.$eval(".c-tagLink", el => el.innerText.substring(1)),
