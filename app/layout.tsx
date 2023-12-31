@@ -22,8 +22,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <div className="container">
             <p className="mb-1">© 2024 網路商店</p>
             <p className="mb-0">
-              <a href="/">Contact us</a> or{" "}
-              <a href="/">follow our Instagram</a>.
+              <a href="/">Contact us</a> or <a href="/">follow our Instagram</a>.
             </p>
           </div>
         </footer>

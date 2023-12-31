@@ -18,7 +18,7 @@ export default async function () {
       {orders.map(order => (
         <div>
           <div>{order.orderedAt.toString()}</div>
-          <div>{order.shippedAt.toString()}</div>
+          {order.shippedAt && <div>{order.shippedAt.toString()}</div>}
           {order.couponUsed && <div>{order.couponUsed.discountRate}</div>}
 
           {order.items.map(orderItem => (
