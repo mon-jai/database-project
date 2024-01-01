@@ -5,7 +5,7 @@ import { fileURLToPath } from "url"
 import { queue } from "async"
 import puppeteer from "puppeteer"
 
-const MAX_ITEM_TO_FETCH = 100
+const MAX_ITEM_TO_FETCH = 60
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
@@ -42,6 +42,8 @@ const fetchQueue = queue(async productUrl => {
       ...(await page.$$eval(".c-radiusPhotoImage:first-child img", imgs => imgs.map(img => img.src))),
       ...(await page.$$eval(".c-prodFeature__center > img", imgs => imgs.map(img => img.src)))
     ].slice(0, 3)
+    console.log({imageUrls})
+
     const product = {
       name: await page.$eval(".o-prodMainName", el => el.innerText),
       category: await page.$eval(".c-tagLink", el => el.innerText.substring(1)),
@@ -54,6 +56,7 @@ const fetchQueue = queue(async productUrl => {
 
     fetchedCount++
   } catch (e) {
+    console.log(e)
     errorOccurred = true
   }
 
@@ -65,6 +68,7 @@ const fetchQueue = queue(async productUrl => {
     const products = (await Promise.all(productPromises))
       .slice(0, MAX_ITEM_TO_FETCH)
       .map((product, index) => ({ id: index, ...product }))
+    console.log(products.map(({images}) => images.length))
     await writeFile(outputPath, JSON.stringify(products))
 
     fetchQueue.pause()

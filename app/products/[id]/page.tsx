@@ -9,6 +9,7 @@ export default async function ({ params: { id } }: { params: { id: string } }) {
     <div className="row gx-3 overflow-hidden ">
       <div className="col-4">
         <img src={product.images[0]} style={{ width: "100%" }} />
+        {product.images.length}
         {product.images.slice(1).map(image => (
           <img src={image} style={{ width: "100%" }} />
         ))}

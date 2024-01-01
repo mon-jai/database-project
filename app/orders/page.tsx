@@ -13,7 +13,7 @@ export default async function () {
 
   return (
     <>
-      <div>Orders</div>
+      <h1>Orders</h1>
 
       {orders.map(order => (
         <div>
