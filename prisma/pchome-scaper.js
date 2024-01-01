@@ -42,7 +42,8 @@ const fetchQueue = queue(async productUrl => {
       ...(await page.$$eval(".c-radiusPhotoImage:first-child img", imgs => imgs.map(img => img.src))),
       ...(await page.$$eval(".c-prodFeature__center > img", imgs => imgs.map(img => img.src)))
     ].slice(0, 3)
-    console.log({imageUrls})
+
+    if (imageUrls.length < 3) throw "Not enough images"
 
     const product = {
       name: await page.$eval(".o-prodMainName", el => el.innerText),
@@ -56,7 +57,6 @@ const fetchQueue = queue(async productUrl => {
 
     fetchedCount++
   } catch (e) {
-    console.log(e)
     errorOccurred = true
   }
 
@@ -68,7 +68,6 @@ const fetchQueue = queue(async productUrl => {
     const products = (await Promise.all(productPromises))
       .slice(0, MAX_ITEM_TO_FETCH)
       .map((product, index) => ({ id: index, ...product }))
-    console.log(products.map(({images}) => images.length))
     await writeFile(outputPath, JSON.stringify(products))
 
     fetchQueue.pause()
