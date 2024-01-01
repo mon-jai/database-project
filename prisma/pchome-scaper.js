@@ -5,7 +5,7 @@ import { fileURLToPath } from "url"
 import { queue } from "async"
 import puppeteer from "puppeteer"
 
-const MAX_ITEM_TO_FETCH = 60
+const MAX_ITEM_TO_FETCH = 100
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
