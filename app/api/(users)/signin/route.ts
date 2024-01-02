@@ -1,5 +1,7 @@
-import { authenticate, getSession } from "@/lib/utils"
-import { User } from "@prisma/client"
+import { AUTHENTICATION_ERRORS } from "@/lib/types";
+import { authenticate, getSession } from "@/lib/utils";
+import { User } from "@prisma/client";
+
 
 export async function POST(request: Request) {
   const body: User = await request.json()
@@ -19,6 +21,8 @@ export async function POST(request: Request) {
       return Response.json({ username: "user not found" }, { status: 401 })
     } else if (error === AUTHENTICATION_ERRORS.INCORRECT_PASSWORD) {
       return Response.json({ password: "Incorrect password" }, { status: 401 })
+    } else {
+      return new Response(JSON.stringify(_error), {status: 500})
     }
   }
 }

@@ -53,19 +53,15 @@ export default async function Products({
           </Link>
         ))}
       </div>
-      <div className="d-flex justify-content-center gap-3 mt-5">
+      <div className="d-flex justify-content-center gap-2 mt-5">
         {range(noOfPages).map(index => (
           <Link
             href={`/products?page=${index + 1}`}
-            style={{
-              width: "1.5rem",
-              height: "1.5rem",
-              textAlign: "center",
-              textDecoration: "none",
-              ...(index === page + 1
-                ? { backgroundColor: "var(--bs-green)", color: "white" }
-                : { color: "var(--bs-body-color)" })
-            }}
+            className={
+              "d-flex align-items-center justify-content-center rounded-circle text-decoration-none " +
+              (index + 1 === page ? "bg-success text-white" : "text-body")
+            }
+            style={{ width: "2.5rem", height: "2.5rem" }}
             suppressHydrationWarning={true}
           >
             {index + 1}

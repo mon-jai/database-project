@@ -6,23 +6,61 @@ export default async function ({ params: { id } }: { params: { id: string } }) {
   if (product === null) return notFound()
 
   return (
-    <div className="row gx-3 overflow-hidden ">
+    <div className="row gx-5 overflow-hidden ">
       <div className="col-4">
-        <img src={product.images[0]} style={{ width: "100%" }} />
-        {product.images.length}
-        {product.images.slice(1).map(image => (
-          <img src={image} style={{ width: "100%" }} />
-        ))}
+        <img className="mb-3" src={product.images[0]} style={{ width: "100%" }} />
+        <div className="row gx-3">
+          {product.images.map((image, index) => (
+            <div className="col-4">
+              <img
+                src={image}
+                className={"rounded-3 " + (index === 0 ? "border border-3 border-success" : "")}
+                key="index"
+                style={{ width: "100%", aspectRatio: "1 / 1", objectFit: "cover" }}
+              />
+            </div>
+          ))}
+        </div>
       </div>
 
       <div className="col-8">
         <div className="card p-5">
           <h1 className="fs-2">{product.name}</h1>
-          <div>{product.modifiedAt.toString()}</div>
-          <div>{product.category}</div>
-          <div>{product.price}</div>
-          <div>{product.stock}</div>
-          <div>{product.description}</div>
+          <div className="text-success fs-4 text-end mb-4">${product.price}</div>
+
+          <p>{product.description}</p>
+
+          <table className="table">
+            <tbody>
+              <tr>
+                <th>Modified at</th>
+                <td>{product.modifiedAt.toDateString()}</td>
+              </tr>
+              <tr>
+                <th>Stock</th>
+                <td>{product.stock}</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div className="d-flex justify-content-end mt-4">
+            <div className="d-flex align-items-center p-1 me-4">
+              <div
+                className="btn btn-sm btn-light rounded-circle p-0 d-flex justify-content-center align-items-center"
+                style={{ width: "2rem", aspectRatio: "1 / 1" }}
+              >
+                +
+              </div>
+              <div className="mx-2">1</div>
+              <div
+                className="btn btn-sm btn-light rounded-circle p-0 d-flex justify-content-center align-items-center"
+                style={{ width: "2rem", aspectRatio: "1 / 1" }}
+              >
+                -
+              </div>
+            </div>
+            <button className="btn btn-success">Add to cart</button>
+          </div>
         </div>
       </div>
     </div>

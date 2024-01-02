@@ -43,17 +43,18 @@ export default async function Navbar() {
 
   return (
     <div
-      style={{ padding: "1rem 0", boxShadow: "0 0.5rem 1rem rgba(0,0,0,0.15), inset 0 -1px 0 rgba(255,255,255,0.15)" }}
+      className="py-2"
+      style={{ boxShadow: "0 0.5rem 1rem rgba(0,0,0,0.15), inset 0 -1px 0 rgba(255,255,255,0.15)" }}
     >
-      <div className="container" style={{ height: "48px", display: "flex" }}>
-        <Link href="/" style={{ textDecoration: "none", marginRight: "2rem" }} className="fw-bold fs-2 text-success">
+      <div className="container d-flex align-items-center" style={{ height: "48px" }}>
+        <Link href="/" style={{ textDecoration: "none", marginRight: "1rem" }} className="fw-bold fs-3 text-success">
           網路商店
         </Link>
-        <div style={{ display: "flex", marginRight: "auto" }}>
+        <div className="d-flex me-auto">
           <NavbarButton icon="shopping_cart" label="Shopping Cart" href="/shopping-cart" />
           <NavbarButton icon="order_approve" label="Orders" href="/orders" />
         </div>
-        <div style={{ display: "flex" }}>
+        <div className="d-flex">
           {user ? (
             <>
               <NavbarButton
