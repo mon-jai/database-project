@@ -7,6 +7,10 @@ export async function POST(request: Request) {
   const customerUserId = (await getUserFromSession({ id: true }))?.id
   if (customerUserId === undefined) return new Response("Unauthorized", { status: 401 })
 
-  await prisma.shoppingCart.create({ data: { customerUserId, productId, quantity } })
+  await prisma.shoppingCart.upsert({
+    where: { customerUserId_productId: { customerUserId, productId } },
+    update: { quantity },
+    create: { customerUserId, productId, quantity }
+  })
   return new Response()
 }
