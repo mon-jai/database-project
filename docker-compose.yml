@@ -38,6 +38,8 @@ services:
       - "5050:80"
     volumes:
       - pgadmin-data:/var/lib/pgadmin
+      # https://stackoverflow.com/a/63318968/
+      - ./servers.json:/pgadmin4/servers.json
 
   metabase:
     image: metabase/metabase:latest
