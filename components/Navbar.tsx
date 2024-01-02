@@ -54,7 +54,7 @@ export default async function Navbar() {
           <NavbarButton icon="shopping_cart" label="Shopping Cart" href="/shopping-cart" />
           <NavbarButton icon="order_approve" label="Orders" href="/orders" />
         </div>
-        <div className="d-flex">
+        <div className="d-flex" style={{ height: "100%" }}>
           {user ? (
             <>
               <NavbarButton
@@ -76,7 +76,10 @@ export default async function Navbar() {
               <NavbarButton icon="logout" label="signout" href="/signout" />
             </>
           ) : (
-            <NavbarButton icon="login" label="signin" href="/signin" />
+            <>
+              <NavbarButton icon="person_add" label="signup" href="/signup" />
+              <NavbarButton icon="login" label="signin" href="/signin" />
+            </>
           )}
         </div>
       </div>

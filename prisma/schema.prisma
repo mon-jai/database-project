@@ -30,9 +30,9 @@ enum Role {
 model Customer {
   user          User           @relation(fields: [userId], references: [id])
   userId        Int            @unique
-  birthday      DateTime
-  sex           Sex
-  address       String
+  birthday      DateTime?
+  sex           Sex?
+  address       String?
   creditCards   CreditCard[]
   orders        Order[]
   shoppingCarts ShoppingCart[]

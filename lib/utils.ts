@@ -1,9 +1,10 @@
 import { IRON_SESSION_PASSWORD } from "./constants"
 import prisma from "@/lib/prisma"
-import { Prisma, User } from "@prisma/client"
+import { Prisma } from "@prisma/client"
 import { compare, hash } from "bcrypt"
 import { getIronSession } from "iron-session"
 import { cookies } from "next/headers"
+import { AUTHENTICATION_ERRORS } from "@/lib/types"
 
 export async function hashPassword(password: string) {
   return hash(password, 2)

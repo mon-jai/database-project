@@ -15,6 +15,7 @@ export async function POST(request: Request) {
 
     return new Response("Success", { status: 200 })
   } catch (_error) {
+    console.log(_error)
     const error: AUTHENTICATION_ERRORS = _error as AUTHENTICATION_ERRORS
 
     if (error === AUTHENTICATION_ERRORS.USER_NOT_FOUND) {
