@@ -18,21 +18,21 @@ const ArithmeticButton = ({ label, onClick }: { label: string; onClick: MouseEve
 export default function QuantityInput({
   label,
   className,
+  quantity = 1,
   onSubmit
 }: {
   label: string
   className?: string
+  quantity: number
   onSubmit: SubmitHandler<QuantityInputValues>
 }) {
-  const { register, handleSubmit, setValue, getValues } = useForm<QuantityInputValues>({
-    defaultValues: { quantity: 1 }
-  })
+  const { register, handleSubmit, setValue, getValues } = useForm<QuantityInputValues>({ defaultValues: { quantity } })
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={`d-flex justify-content-end ${className ?? ""}`}>
-      <div className="d-flex align-items-center p-1 me-2">
+      <div className="d-flex align-items-center p-1 me-3">
         <ArithmeticButton label="-" onClick={() => setValue("quantity", getValues("quantity") - 1)} />
-        <input className="checkout-input p-0 border-0 mx-1" type="number" {...register("quantity")} />
+        <input className="checkout-input p-0 border-0 mx-2" type="number" {...register("quantity", {})} />
         <ArithmeticButton label="+" onClick={() => setValue("quantity", getValues("quantity") + 1)} />
       </div>
       <button className="btn btn-success" type="submit">

@@ -14,9 +14,7 @@ export default async function () {
   if (user?.id === undefined) return redirect("/signin")
   if (user.customer === null || user.customer.address === null) return redirect("/edit-info")
 
-  const products = (
-    await prisma.shoppingCart.findMany({ where: { customerUserId: user.id }, include: { product: true } })
-  ).map(({ product }) => product)
+  const items = await prisma.shoppingCart.findMany({ where: { customerUserId: user.id }, include: { product: true } })
 
   const { address, creditCards, coupons } = user.customer
 
@@ -25,10 +23,10 @@ export default async function () {
       <h1 className="mb-3">Shopping Cart</h1>
 
       <ol className="list-group">
-        {products.map(product => (
-          <ProductItem {...{ product }}>
-            <EditQuantity productId={product.id} />
-            <RemoveItem productId={product.id} />
+        {items.map(item => (
+          <ProductItem key={item.product.id} product={item.product}>
+            <EditQuantity productId={item.product.id} quantity={item.quantity} />
+            <RemoveItem productId={item.product.id} />
           </ProductItem>
         ))}
       </ol>

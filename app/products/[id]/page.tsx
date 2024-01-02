@@ -12,7 +12,7 @@ export default async function ({ params: { id } }: { params: { id: string } }) {
         <img className="mb-3" src={product.images[0]} style={{ width: "100%" }} />
         <div className="row gx-3">
           {product.images.map((image, index) => (
-            <div className="col-4">
+            <div key={index} className="col-4">
               <img
                 src={image}
                 className={"rounded-3 " + (index === 0 ? "border border-3 border-success" : "")}

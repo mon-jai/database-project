@@ -7,7 +7,7 @@ export function ProductItem({ product, children }: React.PropsWithChildren<{ pro
       <img style={{ width: "5rem", aspectRatio: "1 / 1" }} src={product.images[0]} />
 
       <div className="ms-3 me-auto">
-        <Link href={`/products/${product.id}`} className="fw-bold">
+        <Link href={`/products/${product.id}`} className="fw-bold text-body text-decoration-none">
           {product.name}
         </Link>
         <div className="text-success">${product.price}</div>

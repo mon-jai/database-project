@@ -61,7 +61,9 @@ export default function ({
         <label>Credit card</label>
         <select className="form-select" {...register("creditCardId")}>
           {creditCards.map(creditCard => (
-            <option value={creditCard.id}>{creditCardNoToString(creditCard.cardNo)}</option>
+            <option key={creditCard.id} value={creditCard.id}>
+              {creditCardNoToString(creditCard.cardNo)}
+            </option>
           ))}
         </select>
       </div>
@@ -71,7 +73,7 @@ export default function ({
         <div className="d-flex">
           <CouponInput couponId={"null"} label="Do Not use coupon" defaultChecked />
           {coupons.map(coupon => (
-            <CouponInput couponId={coupon.id} label={`${coupon.discountRate * 100}%`} />
+            <CouponInput key={coupon.id} couponId={coupon.id} label={`${coupon.discountRate * 100}%`} />
           ))}
         </div>
       </div>

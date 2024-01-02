@@ -26,8 +26,8 @@ export default async function Products({
       <div className="row" style={{ gap: "1rem" }}>
         {products.map(product => (
           <Link
-            href={`products/${product.id}`}
             key={product.id}
+            href={`products/${product.id}`}
             className="card px-0 shadow-sm"
             style={{
               overflow: "hidden",
@@ -56,10 +56,11 @@ export default async function Products({
       <div className="d-flex justify-content-center gap-2 mt-5">
         {range(noOfPages).map(index => (
           <Link
+            key={index}
             href={`/products?page=${index + 1}`}
             className={
               "d-flex align-items-center justify-content-center rounded-circle text-decoration-none " +
-              (index + 1 === page ? "bg-success text-white" : "text-body")
+              (index === page ? "bg-success text-white" : "text-body")
             }
             style={{ width: "2.5rem", height: "2.5rem" }}
             suppressHydrationWarning={true}
