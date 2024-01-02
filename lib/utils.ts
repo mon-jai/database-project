@@ -1,10 +1,10 @@
 import { IRON_SESSION_PASSWORD } from "./constants"
 import prisma from "@/lib/prisma"
+import { AUTHENTICATION_ERRORS } from "@/lib/types"
 import { Prisma } from "@prisma/client"
 import { compare, hash } from "bcrypt"
 import { getIronSession } from "iron-session"
 import { cookies } from "next/headers"
-import { AUTHENTICATION_ERRORS } from "@/lib/types"
 
 export async function hashPassword(password: string) {
   return hash(password, 2)
@@ -25,19 +25,13 @@ export async function getSession() {
   })
 }
 
-export async function getUserFromSession<T extends Prisma.UserFindFirstArgs>(
-  props: T
-): Promise<ReturnType<typeof prisma.user.findFirst<T>>> {
+export async function getUserFromSession<T extends Prisma.UserSelect>(props: T = {} as T) {
   const username = (await getSession()).username
   if (username === undefined) return null
 
-  props.where ??= {}
-  props.where.username = username
-
-  // @ts-expect-error
-  return prisma.user.findFirst(props)
+  return prisma.user.findFirst({ select: props, where: { username } })
 }
 
 export async function getRoleFromSession() {
-  return (await getUserFromSession({ select: { role: true } }))?.role
+  return (await getUserFromSession({ role: true }))?.role
 }

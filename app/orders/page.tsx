@@ -1,9 +1,11 @@
+import { ProductItem } from "@/components/ProductItem"
 import prisma from "@/lib/prisma"
 import { getUserFromSession } from "@/lib/utils"
+import Link from "next/link"
 import { redirect } from "next/navigation"
 
 export default async function () {
-  const customerUserId = (await getUserFromSession({ select: { id: true } }))?.id
+  const customerUserId = (await getUserFromSession({ id: true }))?.id
   if (customerUserId === undefined) return redirect("signin")
 
   const orders = await prisma.order.findMany({
@@ -13,23 +15,22 @@ export default async function () {
 
   return (
     <>
-      <h1>Orders</h1>
+      <h1 className="mb-3">Orders</h1>
 
       {orders.map(order => (
-        <div>
-          <div>{order.orderedAt.toString()}</div>
-          {order.shippedAt && <div>{order.shippedAt.toString()}</div>}
-          {order.couponUsed && <div>{order.couponUsed.discountRate}</div>}
-
-          {order.items.map(orderItem => (
-            <div>
-              <img src={orderItem.product.images[0]} />
-              <div>{orderItem.product.name}</div>
-              <div>{orderItem.purchasePrice}</div>
-              <div>{orderItem.quantity}</div>
+        <ol className="list-group mb-3">
+          <li className="list-group-item p-4">
+            <h2>Order {order.id}</h2>
+            <div className="text-secondary">
+              Ordered at: {order.orderedAt.toDateString()}
+              {order.shippedAt && ` • Shipped at: ${order.shippedAt.toString()}`}
+              {order.couponUsed && ` • Discount: ${order.couponUsed.discountRate * 100}%`}
             </div>
+          </li>
+          {order.items.map(({ product }) => (
+            <ProductItem {...{ product }} />
           ))}
-        </div>
+        </ol>
       ))}
     </>
   )

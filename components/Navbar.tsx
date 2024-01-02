@@ -39,7 +39,7 @@ function NavbarButton(props: { label: string; href: string } & ({ icon: string }
 }
 
 export default async function Navbar() {
-  const user = await getUserFromSession({ select: { username: true, avatar: true } })
+  const user = await getUserFromSession({ username: true, avatar: true })
 
   return (
     <div
