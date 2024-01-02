@@ -30,8 +30,18 @@ services:
       timeout: 2s
       retries: 20
 
+  pgadmin:
+    image: dpage/pgadmin4:8
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - "5050:80"
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+
   metabase:
     image: metabase/metabase:latest
+    env_file: .env
     ports:
       - ${METABASE_PORT}:3000
     healthcheck:
@@ -42,3 +52,4 @@ services:
 
 volumes:
   postgres-data:
+  pgadmin-data:

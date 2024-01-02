@@ -19,7 +19,6 @@ export default function App() {
   const {
     register,
     handleSubmit,
-    setError,
     formState: { errors }
   } = useForm<UserInput>()
 
