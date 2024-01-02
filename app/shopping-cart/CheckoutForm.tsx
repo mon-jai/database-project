@@ -21,7 +21,7 @@ export default function ({
 }: {
   address: string
   creditCards: CreditCard[]
-  coupons: Coupon[]
+  coupons: (Coupon & { _count: { order: number } })[]
 }) {
   const { register, handleSubmit } = useForm<CheckoutInput>()
 
@@ -72,9 +72,11 @@ export default function ({
         <label>Coupon</label>
         <div className="d-flex">
           <CouponInput couponId={"null"} label="Do Not use coupon" defaultChecked />
-          {coupons.map(coupon => (
-            <CouponInput key={coupon.id} couponId={coupon.id} label={`${coupon.discountRate * 100}%`} />
-          ))}
+          {coupons
+            .filter(coupon => coupon._count.order === 0)
+            .map(coupon => (
+              <CouponInput key={coupon.id} couponId={coupon.id} label={`${coupon.discountRate * 100}%`} />
+            ))}
         </div>
       </div>
 

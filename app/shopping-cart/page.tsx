@@ -9,7 +9,19 @@ import { redirect } from "next/navigation"
 export default async function () {
   const user = await getUserFromSession({
     id: true,
-    customer: { select: { address: true, creditCards: true, coupons: true } }
+    customer: {
+      select: {
+        address: true,
+        creditCards: true,
+        coupons: {
+          include: {
+            _count: {
+              select: { order: true }
+            }
+          }
+        }
+      }
+    }
   })
   if (user?.id === undefined) return redirect("/signin")
   if (user.customer === null || user.customer.address === null) return redirect("/edit-info")
