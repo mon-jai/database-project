@@ -9,7 +9,7 @@
     "build": "next build",
     "build-db": "prisma generate && prisma db push",
     "seed-db": "prisma db seed",
-    "build-sql": "npx prisma migrate dev --name init && prisma db seed",
+    "build-sql": "prisma db seed",
     "start": "next start",
     "lint": "next lint",
     "format": "prettier --write ."

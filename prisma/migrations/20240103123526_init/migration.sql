@@ -12,6 +12,7 @@ CREATE TABLE "User" (
     "password" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "phoneNumber" TEXT NOT NULL,
+    "avatar" TEXT NOT NULL,
     "role" "Role" NOT NULL,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
@@ -20,9 +21,9 @@ CREATE TABLE "User" (
 -- CreateTable
 CREATE TABLE "Customer" (
     "userId" INTEGER NOT NULL,
-    "birthday" TIMESTAMP(3) NOT NULL,
-    "sex" "Sex" NOT NULL,
-    "address" TEXT NOT NULL
+    "birthday" TIMESTAMP(3),
+    "sex" "Sex",
+    "address" TEXT
 );
 
 -- CreateTable
@@ -47,7 +48,7 @@ CREATE TABLE "Product" (
     "price" DOUBLE PRECISION NOT NULL,
     "stock" INTEGER NOT NULL,
     "description" TEXT NOT NULL,
-    "images" BYTEA[],
+    "images" TEXT[],
 
     CONSTRAINT "Product_pkey" PRIMARY KEY ("id")
 );
@@ -57,7 +58,8 @@ CREATE TABLE "Order" (
     "id" SERIAL NOT NULL,
     "customerUserId" INTEGER NOT NULL,
     "orderedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "shippedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "shippedAt" TIMESTAMP(3),
+    "creditCardId" INTEGER NOT NULL,
     "couponId" INTEGER,
 
     CONSTRAINT "Order_pkey" PRIMARY KEY ("id")
@@ -107,6 +109,9 @@ ALTER TABLE "CreditCard" ADD CONSTRAINT "CreditCard_customerUserId_fkey" FOREIGN
 
 -- AddForeignKey
 ALTER TABLE "Order" ADD CONSTRAINT "Order_customerUserId_fkey" FOREIGN KEY ("customerUserId") REFERENCES "Customer"("userId") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Order" ADD CONSTRAINT "Order_creditCardId_fkey" FOREIGN KEY ("creditCardId") REFERENCES "CreditCard"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Order" ADD CONSTRAINT "Order_couponId_fkey" FOREIGN KEY ("couponId") REFERENCES "Coupon"("id") ON DELETE SET NULL ON UPDATE CASCADE;
