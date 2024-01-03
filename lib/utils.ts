@@ -32,10 +32,6 @@ export async function getUserFromSession<T extends Prisma.UserSelect>(props: T =
   return prisma.user.findFirst({ select: props, where: { username } })
 }
 
-export async function getRoleFromSession() {
-  return (await getUserFromSession({ role: true }))?.role
-}
-
 export function discountRateToString(discountRate: number) {
   return `${Math.round((1 - discountRate) * 100)}% off`
 }

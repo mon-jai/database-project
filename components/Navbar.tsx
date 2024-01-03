@@ -1,4 +1,4 @@
-import { getSession, getUserFromSession } from "@/lib/utils"
+import {  getUserFromSession } from "@/lib/utils"
 import Link from "next/link"
 import { ReactNode } from "react"
 
@@ -39,7 +39,7 @@ function NavbarButton(props: { label: string; href: string } & ({ icon: string }
 }
 
 export default async function Navbar() {
-  const user = await getUserFromSession({ username: true, avatar: true })
+  const user = await getUserFromSession({ username: true, avatar: true, role: true })
 
   return (
     <div
@@ -50,11 +50,23 @@ export default async function Navbar() {
         <Link href="/" style={{ textDecoration: "none", marginRight: "1rem" }} className="fw-bold fs-3 text-success">
           網路商店
         </Link>
-        <div className="d-flex me-auto">
-          <NavbarButton icon="shopping_cart" label="Shopping Cart" href="/shopping-cart" />
-          <NavbarButton icon="order_approve" label="Orders" href="/orders" />
-        </div>
-        <div className="d-flex" style={{ height: "100%" }}>
+        {user && (
+          <div className="d-flex">
+            {user.role === "Customer" ? (
+              <>
+                <NavbarButton icon="shopping_cart" label="Shopping Cart" href="/shopping-cart" />
+                <NavbarButton icon="order_approve" label="Orders" href="/orders" />
+              </>
+            ) : (
+              <>
+                <NavbarButton icon="category" label="Products" href="/admin/products" />
+                <NavbarButton icon="sell" label="Coupons" href="/admin/coupons" />
+                <NavbarButton icon="order_approve" label="Orders" href="/admin/orders" />
+              </>
+            )}
+          </div>
+        )}
+        <div className="d-flex ms-auto" style={{ height: "100%" }}>
           {user ? (
             <>
               <NavbarButton

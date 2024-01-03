@@ -1,9 +1,10 @@
-import { getRoleFromSession } from "./lib/utils"
-import { Role } from "@prisma/client"
-import { redirect } from "next/navigation"
+import { getUserFromSession } from "./lib/utils"
+import { Role } from "@prisma/client";
+import { redirect } from "next/navigation";
+
 
 export async function middleware() {
-  const role = await getRoleFromSession()
+  const role = await(await getUserFromSession({ role: true }))?.role
   if (role !== Role.Admin) return redirect("/")
 }
 

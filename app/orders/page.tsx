@@ -31,13 +31,17 @@ export default async function () {
             <span className="text-success fs-3">
               $
               {Math.round(
-                order.items.reduce((accumulator, item) => accumulator + item.purchasePrice, 0) *
-                  (order.couponUsed?.discountRate ?? 1)
+                order.items.reduce(
+                  (accumulator, { purchasePrice, quantity }) => accumulator + purchasePrice * quantity,
+                  0
+                ) * (order.couponUsed?.discountRate ?? 1)
               )}
             </span>
           </li>
-          {order.items.map(({ product }) => (
-            <ProductItem key={product.id} {...{ product }} />
+          {order.items.map(({ product, quantity }) => (
+            <ProductItem key={product.id} {...{ product }}>
+              <span className="text-secondary fs-5">{quantity}</span>
+            </ProductItem>
           ))}
         </ol>
       ))}
