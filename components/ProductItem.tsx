@@ -1,12 +1,16 @@
 import { Product } from "@prisma/client"
 import Link from "next/link"
 
-export function ProductItem({ product, children }: React.PropsWithChildren<{ product: Product }>) {
+export function ProductItem({
+  product,
+  children,
+  image
+}: React.PropsWithChildren<{ product: Product; image?: boolean }>) {
   return (
     <div key={product.id} className="list-group-item d-flex align-items-center">
-      <img style={{ width: "5rem", aspectRatio: "1 / 1" }} src={product.images[0]} />
+      {image && <img className="me-3" style={{ width: "5rem", aspectRatio: "1 / 1" }} src={product.images[0]} />}
 
-      <div className="ms-3 me-auto">
+      <div className="me-auto">
         <Link href={`/products/${product.id}`} className="fw-bold text-body text-decoration-none">
           {product.name}
         </Link>

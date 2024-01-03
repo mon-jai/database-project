@@ -40,8 +40,6 @@ services:
       - pgadmin-data:/var/lib/pgadmin
       # https://stackoverflow.com/a/63318968/
       - ./servers.json:/pgadmin4/servers.json
-    logging:
-      driver: none
 
   metabase:
     image: metabase/metabase:latest
@@ -53,8 +51,6 @@ services:
       interval: 15s
       timeout: 5s
       retries: 5
-    logging:
-      driver: none
 
 volumes:
   postgres-data:

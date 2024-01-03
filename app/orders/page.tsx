@@ -15,7 +15,7 @@ export default async function () {
 
   return (
     <>
-      <h1 className="mb-3">Orders</h1>
+      <h1 className="mb-3">Admin / Orders</h1>
 
       {orders.map(order => (
         <ol key={order.id} className="list-group mb-3">
@@ -28,18 +28,22 @@ export default async function () {
                 {order.couponUsed && ` • ${discountRateToString(order.couponUsed.discountRate)}`}
               </div>
             </div>
-            <span className="text-success fs-3">
-              $
-              {Math.round(
-                order.items.reduce(
-                  (accumulator, { purchasePrice, quantity }) => accumulator + purchasePrice * quantity,
-                  0
-                ) * (order.couponUsed?.discountRate ?? 1)
-              )}
-            </span>
+            <div className="d-flex flex-column">
+              <button className="btn btn-success">Mark as shipped</button>
+
+              <span className="text-success fs-3">
+                $
+                {Math.round(
+                  order.items.reduce(
+                    (accumulator, { purchasePrice, quantity }) => accumulator + purchasePrice * quantity,
+                    0
+                  ) * (order.couponUsed?.discountRate ?? 1)
+                )}
+              </span>
+            </div>
           </li>
           {order.items.map(({ product, quantity }) => (
-            <ProductItem key={product.id} {...{ product }}>
+            <ProductItem key={product.id} product={product} image={false}>
               <span className="text-secondary fs-5">{quantity}</span>
             </ProductItem>
           ))}

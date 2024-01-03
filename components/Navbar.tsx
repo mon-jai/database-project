@@ -1,4 +1,4 @@
-import {  getUserFromSession } from "@/lib/utils"
+import { getUserFromSession } from "@/lib/utils"
 import Link from "next/link"
 import { ReactNode } from "react"
 
