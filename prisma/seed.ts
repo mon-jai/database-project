@@ -15,8 +15,7 @@ const sqlStatements = sqlString
   .filter(line => line.length > 0 && !line.startsWith("--"))
   .join("\n")
   .replaceAll(/([^;])\n/g, (_match, p1) => p1)
-  .split(";\n")
-  .map(line => line + ";")
+  .split("\n")
 
 try {
   await Promise.all(
