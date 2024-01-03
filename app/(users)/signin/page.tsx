@@ -26,17 +26,22 @@ export default function App() {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div>
-        <span>Username</span>
-        <input {...register("username", { required: true })} />
+    <form onSubmit={handleSubmit(onSubmit)} className="card p-5 m-auto gap-2">
+      <div className="form-group mb-3">
+        <label className="form-label">Username</label>
+        <input {...register("username", { required: true })} className="form-control" />
       </div>
-      <div>
-        <span>Password</span>
-        <input {...register("password", { required: true })} />
+
+      <div className="form-group mb-3">
+        <label className="form-label">Password</label>
+        <input {...register("password", { required: true })} className="form-control" type="password" />
       </div>
+
       {Object.keys(errors).length > 0 && <div>error.message</div>}
-      <input type="submit" />
+
+      <button className="btn btn-success" type="submit">
+        Sign in
+      </button>
     </form>
   )
 }

@@ -9,12 +9,12 @@ export const dynamic = "force-dynamic"
 const COLUMNS_PER_ROW = 4
 
 export default async function Products({
-  searchParams: { page: pageString = "0" }
+  searchParams: { page: pageString = "1" }
 }: {
   searchParams: { page: string }
 }) {
   const page = parseInt(pageString)
-  const noOfPages = Math.ceil((await prisma.product.count()) / 9)
+  const noOfPages = Math.floor((await prisma.product.count()) / PRODUCTS_PER_PAGE)
   const products = await prisma.product.findMany({
     skip: page * PRODUCTS_PER_PAGE,
     take: PRODUCTS_PER_PAGE,
@@ -60,7 +60,7 @@ export default async function Products({
             href={`/products?page=${index + 1}`}
             className={
               "d-flex align-items-center justify-content-center rounded-circle text-decoration-none " +
-              (index === page ? "bg-success text-white" : "text-body")
+              (index + 1 === page ? "bg-success text-white" : "text-body")
             }
             style={{ width: "2.5rem", height: "2.5rem" }}
             suppressHydrationWarning={true}

@@ -53,12 +53,12 @@ export default function ({
   return (
     <form className="mt-3" onSubmit={handleSubmit(onSubmit)}>
       <div className="form-group mb-3">
-        <label>Address</label>
+        <label className="form-label">Address</label>
         <input className="form-control" value={address} disabled />
       </div>
 
       <div className="form-group mb-3">
-        <label>Credit card</label>
+        <label className="form-label">Credit card</label>
         <select className="form-select" {...register("creditCardId")}>
           {creditCards.map(creditCard => (
             <option key={creditCard.id} value={creditCard.id}>
@@ -69,7 +69,7 @@ export default function ({
       </div>
 
       <div className="form-group mb-3">
-        <label>Coupon</label>
+        <label className="form-label">Coupon</label>
         <div className="d-flex">
           <CouponInput couponId={"null"} label="Do Not use coupon" defaultChecked />
           {coupons

@@ -27,7 +27,7 @@ export default async function ({ params: { id } }: { params: { id: string } }) {
       <div className="col-8">
         <div className="card p-5">
           <h1 className="fs-2">{product.name}</h1>
-          <div className="text-success fs-4 text-end mb-4">${product.price}</div>
+          <div className="text-success fs-3 text-end mb-4">${product.price}</div>
 
           <p>{product.description}</p>
 

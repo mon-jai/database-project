@@ -1,21 +1,22 @@
 import "./globals.scss"
 import Navbar from "@/components/Navbar"
-import { Inter } from "next/font/google"
+import { Inter, Noto_Sans_TC } from "next/font/google"
 
 const inter = Inter({
   variable: "--font-inter",
-  subsets: ["latin"],
-  display: "swap"
+  subsets: ["latin"]
 })
+
+const noto_sans_tc = Noto_Sans_TC({ variable: "--font-noto-sans-tc", preload: false })
 
 export const dynamic = "force-dynamic"
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className={inter.variable + " d-flex flex-column"}>
+    <html lang="en" className={`${inter.variable} ${noto_sans_tc.variable}`}>
+      <body className={`${inter.variable} ${noto_sans_tc.variable} d-flex flex-column`}>
         <Navbar />
-        <div className="container mb-5" style={{ marginTop: "3rem" }}>
+        <div className="container mb-5 flex-grow-1 d-flex flex-column" style={{ marginTop: "3rem" }}>
           {children}
         </div>
         <footer className="mt-auto py-5 bg-body-tertiary ">

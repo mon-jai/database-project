@@ -1,6 +1,7 @@
 import { AUTHENTICATION_ERRORS } from "@/lib/types"
 import { authenticate, getSession } from "@/lib/utils"
 import { User } from "@prisma/client"
+import { revalidatePath } from "next/cache"
 
 export async function POST(request: Request) {
   const body: User = await request.json()
@@ -12,6 +13,7 @@ export async function POST(request: Request) {
     session.username = body.username
     await session.save()
 
+    revalidatePath("/", "layout")
     return new Response("Success", { status: 200 })
   } catch (_error) {
     console.log(_error)

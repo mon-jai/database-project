@@ -7,7 +7,7 @@ export type QuantityInputValues = { quantity: number }
 
 const ArithmeticButton = ({ label, onClick }: { label: string; onClick: MouseEventHandler }) => (
   <div
-    className="btn btn-sm btn-light rounded-circle p-0 d-flex justify-content-center align-items-center"
+    className="btn btn-light rounded-circle p-0 fs-5 d-flex justify-content-center align-items-center"
     style={{ width: "2rem", aspectRatio: "1 / 1" }}
     onClick={onClick}
   >
@@ -23,7 +23,7 @@ export default function QuantityInput({
 }: {
   label: string
   className?: string
-  quantity: number
+  quantity?: number
   onSubmit: SubmitHandler<QuantityInputValues>
 }) {
   const { register, handleSubmit, setValue, getValues } = useForm<QuantityInputValues>({ defaultValues: { quantity } })

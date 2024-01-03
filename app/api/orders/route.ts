@@ -9,7 +9,7 @@ export async function POST(request: Request) {
 
   const items = await prisma?.shoppingCart.findMany({
     where: { customerUserId: userId },
-    select: { quantity: true, product: { select: { id: true, price: true } } }
+    select: { quantity: true, product: { select: { id: true, price: true, stock: true } } }
   })
   if (items.length === 0) return new Response("No items added to cart", { status: 400 })
 
@@ -27,6 +27,7 @@ export async function POST(request: Request) {
     await prisma.orderItem.create({
       data: { orderId, productId: item.product.id, purchasePrice: item.product.price, quantity: item.quantity }
     })
+    await prisma.product.update({ data: { stock: { decrement: 1 } }, where: { id: item.product.id } })
   }
 
   return new Response()

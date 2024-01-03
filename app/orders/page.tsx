@@ -1,6 +1,6 @@
 import { ProductItem } from "@/components/ProductItem"
 import prisma from "@/lib/prisma"
-import { getUserFromSession } from "@/lib/utils"
+import { discountRateToString, getUserFromSession } from "@/lib/utils"
 import { redirect } from "next/navigation"
 
 export default async function () {
@@ -23,9 +23,9 @@ export default async function () {
             <div>
               <h2>Order #{order.id}</h2>
               <div className="text-secondary">
-                Ordered at: {order.orderedAt.toDateString()}
-                {order.shippedAt && ` • Shipped at: ${order.shippedAt.toString()}`}
-                {order.couponUsed && ` • Discount: ${order.couponUsed.discountRate * 100}%`}
+                {order.orderedAt.toDateString()} ordered
+                {order.shippedAt && ` • ${order.shippedAt.toDateString()} shipped`}
+                {order.couponUsed && ` • ${discountRateToString(order.couponUsed.discountRate)}`}
               </div>
             </div>
             <span className="text-success fs-3">
