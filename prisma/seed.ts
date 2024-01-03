@@ -2,11 +2,13 @@ import { readFile } from "fs/promises"
 import { dirname, resolve } from "path"
 import { fileURLToPath } from "url"
 
+import { Prisma } from "@prisma/client"
+
 import prisma from "../lib/prisma.js"
 import _products from "./products.json" with { "type": "json" }
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
-const products = _products as any as Parameters<typeof prisma.product.create>[0]["data"][]
+const products = _products as any as Prisma.ProductUncheckedCreateInput[]
 
 const sqlString = await readFile(resolve(__dirname, "seed.sql"), { encoding: "utf-8" })
 const sqlStatements = sqlString
