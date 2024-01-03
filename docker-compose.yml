@@ -21,7 +21,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - postgres-data2:/var/lib/postgresql/data/
+      - postgres-data:/var/lib/postgresql/data/
     healthcheck:
       # specifying user and database is needed to avoid `FATAL:  role "root" does not exist`
       # spam in the logs
@@ -53,5 +53,5 @@ services:
       retries: 5
 
 volumes:
-  postgres-data2:
+  postgres-data:
   pgadmin-data:

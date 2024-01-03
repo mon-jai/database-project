@@ -19,11 +19,11 @@ const sqlStatements = sqlString
   .map(line => line + ";")
 
 try {
-  for (const sql of sqlStatements) await prisma.$executeRawUnsafe(sql)
-
   await Promise.all(
     products.map(product => prisma.product.upsert({ where: { id: product.id }, update: {}, create: product }))
   )
+
+  for (const sql of sqlStatements) await prisma.$executeRawUnsafe(sql)
 } catch (e) {
   console.error(e)
   process.exitCode = 1

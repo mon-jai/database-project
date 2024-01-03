@@ -36,8 +36,7 @@ INSERT INTO public."User" VALUES
 --
 
 INSERT INTO public."Customer" VALUES
-	(2, '2003-04-24 00:00:00', 'Male', '106344 台北市忠孝東路三段一號'),
-	(3, NULL, NULL, NULL);
+	(2, '2003-04-24 00:00:00', 'Male', '106344 台北市忠孝東路三段一號');
 
 
 --
