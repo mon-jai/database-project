@@ -1,6 +1,7 @@
 import "./globals.scss"
 import Navbar from "@/components/Navbar"
 import { Inter, Noto_Sans_TC } from "next/font/google"
+import { PropsWithChildren } from "react"
 
 const inter = Inter({
   variable: "--font-inter",
@@ -11,7 +12,7 @@ const noto_sans_tc = Noto_Sans_TC({ variable: "--font-noto-sans-tc", preload: fa
 
 export const dynamic = "force-dynamic"
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <html lang="en" className={`${inter.variable} ${noto_sans_tc.variable}`}>
       <body className={`${inter.variable} ${noto_sans_tc.variable} d-flex flex-column`}>
