@@ -1,19 +1,12 @@
 "use client"
 
 import type { User } from ".prisma/client"
+import { fileToBase64 } from "@/lib/utils"
 import { redirect } from "next/navigation"
 import { SubmitHandler, useForm } from "react-hook-form"
 
 type UserToCreate = Omit<User, "id" | "createdAt" | "role">
 type UserInput = UserToCreate & { avatar: FileList }
-
-const toBase64 = (file: File) =>
-  new Promise<string>((resolve, reject) => {
-    const reader = new FileReader()
-    reader.readAsDataURL(file)
-    reader.onload = () => resolve(reader.result as string)
-    reader.onerror = reject
-  })
 
 export default function App() {
   const {
@@ -25,7 +18,7 @@ export default function App() {
   const onSubmit: SubmitHandler<UserInput> = async data => {
     const user: UserToCreate = {
       ...data,
-      avatar: await toBase64(data.avatar[0])
+      avatar: await fileToBase64(data.avatar[0])
     }
 
     const response = await fetch("api/users", { method: "POST", body: JSON.stringify(user) })
