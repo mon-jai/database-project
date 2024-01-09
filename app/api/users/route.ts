@@ -1,5 +1,5 @@
 import prisma from "@/lib/prisma"
-import { hashPassword } from "@/lib/utils"
+import { hashPassword } from "@/lib/utils-node"
 import { Prisma } from "@prisma/client"
 
 export async function POST(request: Request) {

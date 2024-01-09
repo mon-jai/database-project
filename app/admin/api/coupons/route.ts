@@ -1,6 +1,6 @@
 import prisma from "@/lib/prisma"
 import { CouponInput, ProductInput } from "@/lib/types"
-import { getUserFromSession } from "@/lib/utils"
+import { getUserFromSession } from "@/lib/utils-node"
 
 type CouponError = Partial<Record<keyof CouponInput, string>>
 

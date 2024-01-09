@@ -1,7 +1,7 @@
 import CreditCardForm from "./CreditCardForm"
 import DeleteCreditCardButton from "./DeleteCreditCardButton"
 import prisma from "@/lib/prisma"
-import { getUserFromSession } from "@/lib/utils"
+import { getUserFromSession } from "@/lib/utils-node"
 import { redirect } from "next/navigation"
 
 export default async function ShoppingCart() {

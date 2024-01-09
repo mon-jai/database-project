@@ -1,4 +1,4 @@
-import { getUserFromSession } from "@/lib/utils"
+import { getUserFromSession } from "@/lib/utils-node"
 import { Role } from "@prisma/client"
 import { redirect } from "next/navigation"
 import { PropsWithChildren } from "react"

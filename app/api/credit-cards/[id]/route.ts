@@ -1,5 +1,5 @@
 import prisma from "@/lib/prisma"
-import { getUserFromSession } from "@/lib/utils"
+import { getUserFromSession } from "@/lib/utils-node"
 
 export async function DELETE(_request: Request, { params: { id: creditCardIdString } }: { params: { id: string } }) {
   const creditCardId = parseInt(creditCardIdString)

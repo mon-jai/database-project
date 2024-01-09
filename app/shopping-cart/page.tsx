@@ -3,7 +3,7 @@ import CheckoutForm from "./CheckoutForm"
 import EditQuantity from "./EditQuantity"
 import RemoveItem from "./RemoveItem"
 import prisma from "@/lib/prisma"
-import { getUserFromSession } from "@/lib/utils"
+import { getUserFromSession } from "@/lib/utils-node"
 import { redirect } from "next/navigation"
 
 export default async function ShoppingCart() {

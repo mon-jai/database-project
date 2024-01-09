@@ -1,7 +1,7 @@
 "use client"
 
 import { ProductInput } from "@/lib/types"
-import { fileToBase64 } from "@/lib/utils-shared"
+import { fileToBase64 } from "@/lib/utils-common"
 import { Prisma, Product } from "@prisma/client"
 import { omit } from "lodash-es"
 import { useRouter } from "next/navigation"

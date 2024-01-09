@@ -1,5 +1,5 @@
 import { AUTHENTICATION_ERRORS } from "@/lib/types"
-import { authenticate, getSession } from "@/lib/utils"
+import { authenticate, getSession } from "@/lib/utils-node"
 import { User } from "@prisma/client"
 import { revalidatePath } from "next/cache"
 

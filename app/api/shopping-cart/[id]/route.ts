@@ -1,5 +1,5 @@
 import prisma from "@/lib/prisma"
-import { getUserFromSession } from "@/lib/utils"
+import { getUserFromSession } from "@/lib/utils-node"
 
 export async function POST(request: Request, { params: { id: productIdString } }: { params: { id: string } }) {
   const productId = parseInt(productIdString)

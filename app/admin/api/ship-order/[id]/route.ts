@@ -1,6 +1,6 @@
 import prisma from "@/lib/prisma"
 import { ShipOrderResponse } from "@/lib/types"
-import { getUserFromSession } from "@/lib/utils"
+import { getUserFromSession } from "@/lib/utils-node"
 
 export async function POST(_request: Request, { params: { id: orderIdString } }: { params: { id: string } }) {
   const role = (await getUserFromSession({ role: true }))?.role

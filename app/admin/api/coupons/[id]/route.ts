@@ -1,6 +1,6 @@
 import prisma from "@/lib/prisma"
 import { ProductInput } from "@/lib/types"
-import { getUserFromSession } from "@/lib/utils"
+import { getUserFromSession } from "@/lib/utils-node"
 
 export async function DELETE(_request: Request, { params: { id: couponIdString } }: { params: { id: string } }) {
   const role = (await getUserFromSession({ role: true }))?.role

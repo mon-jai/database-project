@@ -1,4 +1,4 @@
-import { getSession } from "@/lib/utils"
+import { getSession } from "@/lib/utils-node"
 import { redirect } from "next/navigation"
 
 export async function GET() {

@@ -1,5 +1,5 @@
 import UserForm from "@/components/UserForm"
-import { getUserFromSession } from "@/lib/utils"
+import { getUserFromSession } from "@/lib/utils-node"
 import { redirect } from "next/navigation"
 
 export default async function EditUserInfo() {

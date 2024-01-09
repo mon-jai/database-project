@@ -1,7 +1,7 @@
 "use client"
 
 import { CheckoutInput } from "@/lib/types"
-import { creditCardNoToString } from "@/lib/utils-shared"
+import { creditCardNoToString } from "@/lib/utils-common"
 import { Coupon, CreditCard } from "@prisma/client"
 import { useRouter } from "next/navigation"
 import { InputHTMLAttributes } from "react"

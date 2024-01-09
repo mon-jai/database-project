@@ -2,7 +2,7 @@
 
 import ProductItem from "@/components/ProductItem"
 import { ShipOrderResponse } from "@/lib/types"
-import { discountRateToString } from "@/lib/utils-shared"
+import { discountRateToString } from "@/lib/utils-common"
 import { Coupon, Order, OrderItem, Product } from "@prisma/client"
 import { useState } from "react"
 

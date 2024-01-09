@@ -1,6 +1,6 @@
 import prisma from "@/lib/prisma"
 import { ProductInput } from "@/lib/types"
-import { getUserFromSession } from "@/lib/utils"
+import { getUserFromSession } from "@/lib/utils-node"
 
 export async function POST(request: Request) {
   const role = (await getUserFromSession({ role: true }))?.role
