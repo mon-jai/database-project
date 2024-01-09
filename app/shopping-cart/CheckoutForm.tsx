@@ -13,7 +13,7 @@ const creditCardNoToString = (creditCardNo: string) =>
     .filter(Boolean)
     .join("-")
 
-export default function TEMP({
+export default function CheckoutForm({
   address,
   creditCards,
   coupons

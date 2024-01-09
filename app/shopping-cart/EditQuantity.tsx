@@ -5,7 +5,7 @@ import { QuantityInput } from "@/lib/types"
 import { useRouter } from "next/router"
 import { SubmitHandler } from "react-hook-form"
 
-export default function TEMP({ productId, quantity }: { productId: number; quantity: number }) {
+export default function EditQuantity({ productId, quantity }: { productId: number; quantity: number }) {
   const router = useRouter()
 
   const onSubmit: SubmitHandler<QuantityInput> = async ({ quantity }) => {

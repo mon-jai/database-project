@@ -6,7 +6,7 @@ import prisma from "@/lib/prisma"
 import { getUserFromSession } from "@/lib/utils"
 import { redirect } from "next/navigation"
 
-export default async function TEMP() {
+export default async function ShoppingCart() {
   const user = await getUserFromSession({
     id: true,
     customer: {

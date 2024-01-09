@@ -1,7 +1,7 @@
 import prisma from "@/lib/prisma"
 import { getSession } from "@/lib/utils"
 
-export default async function () {
+export default async function CreditCards() {
   const username = (await getSession()).username
   const user = await prisma.user.findFirst({
     where: { username },

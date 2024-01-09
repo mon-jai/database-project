@@ -1,7 +1,7 @@
 import { ProductItem } from "@/components/ProductItem"
 import prisma from "@/lib/prisma"
 
-export default async function TEMP() {
+export default async function Products() {
   const products = await prisma.product.findMany({
     orderBy: [{ id: "asc" }]
   })

@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/router"
 
-export default function TEMP({ productId }: { productId: number }) {
+export default function RemoveItem({ productId }: { productId: number }) {
   const router = useRouter()
 
   return (

@@ -36,7 +36,7 @@ function FileInput({
   )
 }
 
-export default function TEMP({ product }: { product?: Product }) {
+export default function ProductForm({ product }: { product?: Product }) {
   const { register, setValue, handleSubmit } = useForm<ProductFormData>()
   const router = useRouter()
 

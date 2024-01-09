@@ -4,7 +4,7 @@ import { getUserFromSession } from "@/lib/utils"
 import { discountRateToString } from "@/lib/utils-shared"
 import { redirect } from "next/navigation"
 
-export default async function () {
+export default async function Orders() {
   const customerUserId = (await getUserFromSession({ id: true }))?.id
   if (customerUserId === undefined) return redirect("/signin")
 

@@ -1,7 +1,7 @@
 import ProductForm from "../ProductForm"
 import prisma from "@/lib/prisma"
 
-export default async function TEMP({ params: { id } }: { params: { id: string } }) {
+export default async function Products({ params: { id } }: { params: { id: string } }) {
   const product = await prisma.product.findUnique({ where: { id: parseInt(id) } })
 
   return (
