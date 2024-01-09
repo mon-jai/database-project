@@ -1,5 +1,4 @@
-import { Prisma, User } from "@prisma/client";
-
+import { Prisma, User } from "@prisma/client"
 
 export const enum AUTHENTICATION_ERRORS {
   USER_NOT_FOUND,

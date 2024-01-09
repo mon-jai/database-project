@@ -24,7 +24,7 @@ export default async function ShoppingCart() {
     }
   })
   if (user?.id === undefined) return redirect("/signin")
-  if (user.customer === null || user.customer.address === null) return redirect("/edit-info")
+  if (user.customer === null || user.customer.address === null) return redirect("/edit-user-info")
 
   const items = await prisma.shoppingCart.findMany({ where: { customerUserId: user.id }, include: { product: true } })
 

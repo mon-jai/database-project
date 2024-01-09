@@ -83,7 +83,7 @@ export default async function Navbar() {
                   />
                 }
                 label={user.username}
-                href="/edit-info"
+                href="/edit-user-info"
               />
               <NavbarButton icon="logout" label="signout" href="/signout" />
             </>

@@ -1,7 +1,6 @@
-"use client";
+"use client"
 
-import { useRouter } from "next/navigation";
-
+import { useRouter } from "next/navigation"
 
 export default function DeleteCreditCardButton({ id }: { id: number }) {
   const router = useRouter()

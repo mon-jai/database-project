@@ -1,10 +1,9 @@
-"use client";
+"use client"
 
-import { CreditCardInput } from "@/lib/types";
-import { useRouter } from "next/navigation";
-import { InputHTMLAttributes } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
-
+import { CreditCardInput } from "@/lib/types"
+import { useRouter } from "next/navigation"
+import { InputHTMLAttributes } from "react"
+import { SubmitHandler, useForm } from "react-hook-form"
 
 export default function CheckoutForm() {
   const { register, handleSubmit } = useForm<CreditCardInput>()

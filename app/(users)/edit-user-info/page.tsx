@@ -1,12 +1,10 @@
-import prisma from "@/lib/prisma"
-import { getSession } from "@/lib/utils"
+import UserForm from "@/components/UserForm"
+import { getUserFromSession } from "@/lib/utils"
+import { redirect } from "next/navigation"
 
 export default async function EditUserInfo() {
-  const username = (await getSession()).username
-  const user = await prisma.user.findFirst({
-    where: { username },
-    select: { username: true, password: true, email: true, phoneNumber: true }
-  })
+  const user = await getUserFromSession()
+  if (user === null) return redirect("/signin")
 
-  return <div>{JSON.stringify(user)} </div>
+  return <UserForm user={user} />
 }
