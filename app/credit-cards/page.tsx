@@ -1,12 +1,8 @@
-import ProductItem from "../../components/ProductItem";
-import CheckoutForm from "./CreditCardForm";
-import EditQuantity from "./EditQuantity";
-import RemoveItem from "./DeleteCreditCardButton";
-import prisma from "@/lib/prisma";
-import { getUserFromSession } from "@/lib/utils";
-import { redirect } from "next/navigation";
-import DeleteCreditCardButton from "./DeleteCreditCardButton";
-
+import CreditCardForm from "./CreditCardForm"
+import DeleteCreditCardButton from "./DeleteCreditCardButton"
+import prisma from "@/lib/prisma"
+import { getUserFromSession } from "@/lib/utils"
+import { redirect } from "next/navigation"
 
 export default async function ShoppingCart() {
   const user = await getUserFromSession({
@@ -24,20 +20,22 @@ export default async function ShoppingCart() {
 
       <ol className="list-group">
         {creditCards.map(creditCard => (
-                    <div key={creditCard.id} className="list-group-item d-flex align-items-center">
+          <div key={creditCard.id} className="list-group-item d-flex align-items-center">
             <div className="me-auto">
               <div className="fw-bold text-body text-decoration-none">{creditCard.cardNo}</div>
-              <div className="text-secondary">${creditCard.expirationMonth} / {creditCard.expirationYear}</div>
+              <div className="text-secondary">
+                ${creditCard.expirationMonth} / {creditCard.expirationYear}
+              </div>
             </div>
 
-              <div className="d-flex align-items-center gap-4">
-                <DeleteCreditCardButton id={creditCard.id} />
-              </div>
+            <div className="d-flex align-items-center gap-4">
+              <DeleteCreditCardButton id={creditCard.id} />
+            </div>
           </div>
         ))}
       </ol>
 
-      <CheckoutForm {...{ address, creditCards, coupons }} />
+      <CreditCardForm />
     </>
   )
 }

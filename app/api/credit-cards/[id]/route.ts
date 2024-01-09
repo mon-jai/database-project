@@ -7,6 +7,6 @@ export async function DELETE(_request: Request, { params: { id: creditCardIdStri
   const customerUserId = (await getUserFromSession({ id: true }))?.id
   if (customerUserId === undefined) return new Response("Unauthorized", { status: 401 })
 
-  await prisma.creditCard.delete({ where: { customerUserId_creditCardId: { customerUserId, creditCardId } } })
+  await prisma.creditCard.delete({ where: { id: creditCardId } })
   return new Response()
 }

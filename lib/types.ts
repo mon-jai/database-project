@@ -10,11 +10,11 @@ export type UserInput = Omit<User, "id" | "createdAt" | "role">
 
 export type UserSignInInput = Pick<User, "username" | "password">
 
-export type CreditCardInput = RequiredFieldsOnly<Prisma.CreditCardCreateArgs["data"]>
+export type CreditCardInput = Omit<RequiredFieldsOnly<Prisma.CreditCardUncheckedCreateInput>, "customerUserId">
 
 export type CheckoutInput = { creditCardId: string; couponId: string }
 
-export type ProductInput = RequiredFieldsOnly<Prisma.ProductCreateArgs["data"]>
+export type ProductInput = RequiredFieldsOnly<Prisma.ProductUncheckedCreateInput>
 
 export type QuantityInput = { quantity: number }
 
