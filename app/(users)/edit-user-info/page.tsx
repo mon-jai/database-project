@@ -1,5 +1,6 @@
 import UserForm from "@/components/UserForm"
 import { getUserFromSession } from "@/lib/utils-node"
+import Link from "next/link"
 import { redirect } from "next/navigation"
 
 export default async function EditUserInfo() {
@@ -13,5 +14,10 @@ export default async function EditUserInfo() {
   })
   if (user === null) return redirect("/signin")
 
-  return <UserForm user={user} />
+  return (
+    <>
+      <Link href="/credit-cards">Edit Credit Card</Link>
+      <UserForm user={user} />
+    </>
+  )
 }

@@ -6,9 +6,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "npm run build-db && next build",
+    "build": "npm run build-db && npm run build-next",
     "build-db": "prisma generate && prisma db push",
-    "build-sql": "npx prisma migrate dev --name init",
+    "build-next": "next build",
+    "generate-sql": "npx prisma migrate dev --name init",
     "seed-db": "prisma db seed",
     "start": "next start",
     "lint": "next lint",
