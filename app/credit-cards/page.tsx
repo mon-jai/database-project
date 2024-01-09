@@ -16,7 +16,7 @@ export default async function ShoppingCart() {
 
   return (
     <>
-      <h1 className="mb-3">Shopping Cart</h1>
+      <h1 className="mb-3">Credit Card</h1>
 
       <ol className="list-group">
         {creditCards.map(creditCard => (
@@ -24,7 +24,7 @@ export default async function ShoppingCart() {
             <div className="me-auto">
               <div className="fw-bold text-body text-decoration-none">{creditCard.cardNo}</div>
               <div className="text-secondary">
-                ${creditCard.expirationMonth} / {creditCard.expirationYear}
+                {creditCard.expirationMonth}/{creditCard.expirationYear}
               </div>
             </div>
 

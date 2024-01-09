@@ -21,22 +21,22 @@ export default function CheckoutForm() {
     <form className="mt-3" onSubmit={handleSubmit(onSubmit)}>
       <div className="form-group mb-3">
         <label className="form-label">Credit Card Number</label>
-        <input className="form-select" {...register("cardNo")} type="number" />
+        <input className="form-select" {...register("cardNo")} />
       </div>
 
       <div className="form-group mb-3">
         <label className="form-label">Security Code</label>
-        <input className="form-select" {...register("cardNo")} type="number" />
+        <input className="form-select" {...register("securityCode")} />
       </div>
 
       <div className="form-group mb-3">
         <label className="form-label">Expiration (MM/YYYY)</label>
-        <input className="form-select" {...register("expirationMonth")} type="number" />
-        <input className="form-select" {...register("expirationYear")} type="number" />
+        <input className="form-select" {...register("expirationMonth")} />
+        <input className="form-select" {...register("expirationYear")} />
       </div>
 
       <button className="btn btn-success" type="submit">
-        Checkout
+        Add Credit Card
       </button>
     </form>
   )

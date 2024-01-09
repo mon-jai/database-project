@@ -16,7 +16,7 @@ export default async function Coupons() {
           <div key={coupon.id} className="list-group-item d-flex align-items-center">
             <div className="me-auto">
               <div className="fw-bold text-body text-decoration-none">{coupon.customer.user.username}</div>
-              <div className="text-secondary">${coupon.discountRate}</div>
+              <div className="text-secondary">{coupon.discountRate}</div>
             </div>
 
             {coupon.order.length === 0 && (
