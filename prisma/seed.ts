@@ -25,6 +25,22 @@ try {
   )
 
   for (const sql of sqlStatements) await prisma.$executeRawUnsafe(sql)
+
+  const tableNames = // https://stackoverflow.com/a/18508719/
+    (
+      await prisma.$queryRaw<{ relname: string }[]>`
+        SELECT pg_class.relname
+        FROM pg_class INNER JOIN pg_attribute ON pg_attribute.attrelid = pg_class.oid
+        WHERE pg_attribute.attname = 'id' AND pg_class.relkind = 'r'
+      `
+    ).map(({ relname }) => relname)
+
+  // https://github.com/prisma/prisma/discussions/5256#discussioncomment-1191352
+  for (const tableName of tableNames) {
+    await prisma.$executeRawUnsafe(`
+      SELECT setval (pg_get_serial_sequence ('"${tableName}"', 'id'), COALESCE(MAX(id) + 1, 1), FALSE)
+      FROM public."${tableName}";
+    `)
 } catch (e) {
   console.error(e)
   process.exitCode = 1
