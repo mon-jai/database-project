@@ -4,12 +4,12 @@ import prisma from "@/lib/prisma"
 
 export default async function Coupons() {
   const coupons = await prisma.coupon.findMany({
-    include: { customer: { select: { user: { select: { username: true } } } } }
+    include: { customer: { select: { user: { select: { username: true } } } }, order: { select: { id: true } } }
   })
 
   return (
     <>
-      <h1 className="mb-3">Shopping Cart</h1>
+      <h1 className="mb-3">Coupons</h1>
 
       <ol className="list-group">
         {coupons.map(coupon => (
@@ -19,9 +19,11 @@ export default async function Coupons() {
               <div className="text-secondary">${coupon.discountRate}</div>
             </div>
 
-            <div className="d-flex align-items-center gap-4">
-              <DeleteCouponButton id={coupon.id} />
-            </div>
+            {coupon.order.length === 0 && (
+              <div className="d-flex align-items-center gap-4">
+                <DeleteCouponButton id={coupon.id} />
+              </div>
+            )}
           </div>
         ))}
       </ol>

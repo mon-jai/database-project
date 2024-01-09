@@ -1,8 +1,6 @@
 "use client"
 
 import { CouponInput } from "@/lib/types"
-import { useRouter } from "next/navigation"
-import { InputHTMLAttributes } from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
 
 export default function CouponForm() {
@@ -14,7 +12,7 @@ export default function CouponForm() {
   } = useForm<CouponInput>()
 
   const onSubmit: SubmitHandler<CouponInput> = async data => {
-    const response = await fetch("admin/api/coupons", { method: "POST", body: JSON.stringify(data) })
+    const response = await fetch("/admin/api/coupons", { method: "POST", body: JSON.stringify(data) })
     if (response.status === 200) window.location.reload()
     else {
       const errors = await response.json()

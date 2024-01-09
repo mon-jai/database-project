@@ -5,14 +5,7 @@ import { Coupon, CreditCard } from "@prisma/client"
 import { useRouter } from "next/navigation"
 import { InputHTMLAttributes } from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
-
-// https://stackoverflow.com/a/50955590/
-const creditCardNoToString = (creditCardNo: string) =>
-  creditCardNo
-    .split(/(.{4})/)
-    .filter(Boolean)
-    .join("-")
-
+import {creditCardNoToString} from "@/lib/utils-shared"
 export default function CheckoutForm({
   address,
   creditCards,
