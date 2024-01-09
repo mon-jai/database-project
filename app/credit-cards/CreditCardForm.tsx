@@ -14,7 +14,7 @@ export default function CheckoutForm() {
       method: "POST",
       body: JSON.stringify(data)
     })
-    if (response.status === 200) router.push("/orders")
+    if (response.status === 200) window.location.reload()
   }
 
   return (

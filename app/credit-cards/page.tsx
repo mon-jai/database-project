@@ -4,7 +4,7 @@ import prisma from "@/lib/prisma"
 import { getUserFromSession } from "@/lib/utils-node"
 import { redirect } from "next/navigation"
 
-export default async function ShoppingCart() {
+export default async function CreditCards() {
   const user = await getUserFromSession({
     id: true,
     customer: { select: { userId: true } }
