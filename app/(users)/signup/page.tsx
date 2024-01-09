@@ -26,31 +26,37 @@ export default function App() {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div>
-        <span>Username</span>
-        <input {...register("username", { required: true })} />
-      </div>
-      <div>
-        <span>Password</span>
-        <input {...register("password", { required: true })} />
-      </div>
-      <div>
-        <span>Avatar</span>
-        <input type="file" {...register("avatar", { required: true })} />
-      </div>
-      <div>
-        <span>Email</span>
-        <input type="email" {...register("email", { required: true })} />
-      </div>
-      <div>
-        <span>Phone number</span>
-        <input type="tel" {...register("phoneNumber", { required: true })} />
+    <form onSubmit={handleSubmit(onSubmit)} className="card p-5 m-auto gap-2">
+      <div className="form-group mb-3">
+        <label className="form-label">Username</label>
+        <input {...register("username", { required: true })} className="form-control" />
       </div>
 
-      {Object.keys(errors).length > 0 && <div>This field is required</div>}
+      <div className="form-group mb-3">
+        <label className="form-label">Password</label>
+        <input {...register("password", { required: true })} className="form-control" type="password" />
+      </div>
 
-      <input type="submit" />
+      <div className="form-group mb-3">
+        <label className="form-label">Avatar</label>
+        <input {...register("avatar", { required: true })} className="form-control" type="file" />
+      </div>
+
+      <div className="form-group mb-3">
+        <label className="form-label">Email</label>
+        <input {...register("email", { required: true })} className="form-control" type="email" />
+      </div>
+
+      <div className="form-group mb-3">
+        <label className="form-label">Phone Number</label>
+        <input {...register("phoneNumber", { required: true })} className="form-control" type="tel" />
+      </div>
+
+      {Object.keys(errors).length > 0 && <div>error.message</div>}
+
+      <button className="btn btn-success" type="submit">
+        Sign up
+      </button>
     </form>
   )
 }

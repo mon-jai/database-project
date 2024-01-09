@@ -1,5 +1,5 @@
-import { redirect } from "next/navigation";
+import { redirect } from "next/navigation"
 
-export default  function Admin() {
+export default function Admin() {
   return redirect("/admin/products")
 }

@@ -6,7 +6,12 @@ import { InputHTMLAttributes } from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
 
 export default function CouponForm() {
-  const { register, handleSubmit, setError } = useForm<CouponInput>()
+  const {
+    register,
+    handleSubmit,
+    setError,
+    formState: { errors }
+  } = useForm<CouponInput>()
 
   const onSubmit: SubmitHandler<CouponInput> = async data => {
     const response = await fetch("admin/api/coupons", { method: "POST", body: JSON.stringify(data) })
@@ -29,8 +34,10 @@ export default function CouponForm() {
         <input className="form-control" {...register("discountRate", { valueAsNumber: true })} />
       </div>
 
+      {Object.keys(errors).length > 0 && <div>error.message</div>}
+
       <button className="btn btn-success" type="submit">
-        Add coupon
+        Add Coupon
       </button>
     </form>
   )

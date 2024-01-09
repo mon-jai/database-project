@@ -1,5 +1,5 @@
 import DeleteProductButton from "./DeleteProductButton"
-import  ProductItem  from "@/components/ProductItem"
+import ProductItem from "@/components/ProductItem"
 import prisma from "@/lib/prisma"
 import Link from "next/link"
 
