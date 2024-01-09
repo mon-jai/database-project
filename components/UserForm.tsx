@@ -3,12 +3,17 @@
 import { UserInput } from "@/lib/types"
 import { fileToBase64 } from "@/lib/utils-shared"
 import { User } from "@prisma/client"
+import { omit } from "lodash-es"
 import { useRouter } from "next/navigation"
 import { SubmitHandler, useForm } from "react-hook-form"
 
 type UserFormData = UserInput & { avatar: FileList }
 
-export default function UserForm({ user }: { user?: User }) {
+export default function UserForm({
+  user
+}: {
+  user?: Pick<User, "id" | "username" | "email" | "phoneNumber" | "avatar">
+}) {
   const {
     register,
     handleSubmit,
@@ -18,9 +23,10 @@ export default function UserForm({ user }: { user?: User }) {
 
   const onSubmit: SubmitHandler<UserFormData> = async data => {
     const path = user === undefined ? "api/users" : `/api/users/${user.id}`
-    const body: UserInput = {
-      ...data,
-      avatar: await fileToBase64(data.avatar[0])
+    const body = {
+      ...omit(data, "password", "avatar"),
+      ...(data.password ? { password: data.password } : {}),
+      ...(data.avatar[0] ? { avatar: await fileToBase64(data.avatar[0]) } : {})
     }
 
     const response = await fetch(path, { method: "POST", body: JSON.stringify(body) })
@@ -40,18 +46,13 @@ export default function UserForm({ user }: { user?: User }) {
 
       <div className="form-group mb-3">
         <label className="form-label">Password</label>
-        <input
-          {...register("password", { required: true })}
-          defaultValue={user?.password ?? ""}
-          className="form-control"
-          type="password"
-        />
+        <input {...register("password", { required: user === undefined })} className="form-control" type="password" />
       </div>
 
       <div className="form-group mb-3">
         <label className="form-label">Avatar</label>
         <input
-          {...register("avatar", { required: true })}
+          {...register("avatar", { required: user === undefined })}
           defaultValue={user?.avatar ?? ""}
           className="form-control"
           type="file"
