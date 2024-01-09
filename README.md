@@ -10,6 +10,7 @@ docker compose up --detach --wait postgres
 # https://stackoverflow.com/a/66541303/
 docker compose exec postgres psql -U postgres -c "CREATE DATABASE metabase"
 docker compose run node npm run build
+docker compose run node npm run seed-db
 ```
 
 ## Develop the app
