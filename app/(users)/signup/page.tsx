@@ -2,7 +2,7 @@
 
 import { UserInput } from "@/lib/types"
 import { fileToBase64 } from "@/lib/utils-shared"
-import { useRouter } from "next/router"
+import { useRouter } from "next/navigation"
 import { SubmitHandler, useForm } from "react-hook-form"
 
 type UserFormData = UserInput & { avatar: FileList }

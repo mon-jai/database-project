@@ -1,5 +1,11 @@
-// TODO
+import ProductForm from "../ProductForm"
 
-export default async function CreateProduct() {
-  return <div>Admin / Products (create)</div>
+export default async function Products() {
+  return (
+    <>
+      <h1 className="mb-3">Create Product</h1>
+
+      <ProductForm />
+    </>
+  )
 }

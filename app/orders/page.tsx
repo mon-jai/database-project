@@ -1,4 +1,4 @@
-import { ProductItem } from "@/components/ProductItem"
+import  ProductItem  from "@/components/ProductItem"
 import prisma from "@/lib/prisma"
 import { getUserFromSession } from "@/lib/utils"
 import { discountRateToString } from "@/lib/utils-shared"

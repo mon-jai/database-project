@@ -1,7 +1,7 @@
 "use client"
 
 import { UserSignInInput } from "@/lib/types"
-import { useRouter } from "next/router"
+import { useRouter } from "next/navigation"
 import { SubmitHandler, useForm } from "react-hook-form"
 
 export default function App() {
@@ -15,8 +15,10 @@ export default function App() {
 
   const onSubmit: SubmitHandler<UserSignInInput> = async data => {
     const response = await fetch("/api/signin", { method: "POST", body: JSON.stringify(data) })
-    if (response.status === 200) router.push("/")
-    else {
+    if (response.status === 200) {
+      // TODO: check how to rerender navbar
+      window.location.href = "/"
+    } else {
       const errors = response.json()
       for (const [name, message] of Object.entries(errors)) {
         setError(name as keyof UserSignInInput, { message: message })

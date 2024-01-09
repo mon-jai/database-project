@@ -1,6 +1,7 @@
 "use client"
 
-import { ProductItem } from "@/components/ProductItem"
+import ProductItem from "@/components/ProductItem"
+import { ShipOrderResponse } from "@/lib/types"
 import { discountRateToString } from "@/lib/utils-shared"
 import { Coupon, Order, OrderItem, Product } from "@prisma/client"
 import { useState } from "react"
@@ -17,8 +18,8 @@ export default function OrderItemComponent({
   )
 
   const shipOrder = async () => {
-    const response = await fetch(`api/ship-order/${order.id}`, { method: "POST" })
-    const shippedAt = new Date((await response.json()).shippedAt as number)
+    const response = await fetch(`/admin/api/ship-order/${order.id}`, { method: "POST" })
+    const shippedAt = new Date(((await response.json()) as ShipOrderResponse).shippedAt)
     setShippedAt(shippedAt)
   }
 
@@ -34,7 +35,7 @@ export default function OrderItemComponent({
             {order.couponUsed && ` • ${discountRateToString(order.couponUsed.discountRate)}`}
           </div>
         </div>
-        {order.shippedAt === null && (
+        {shippedAt === null && (
           <div className="d-flex" onClick={shipOrder}>
             <button className="btn btn-success">Mark as shipped</button>
           </div>

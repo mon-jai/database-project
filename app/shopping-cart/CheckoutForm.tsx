@@ -2,7 +2,7 @@
 
 import { CheckoutInput } from "@/lib/types"
 import { Coupon, CreditCard } from "@prisma/client"
-import { useRouter } from "next/router"
+import { useRouter } from "next/navigation"
 import { InputHTMLAttributes } from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
 

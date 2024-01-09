@@ -1,5 +1,8 @@
-import OrderItem from "./OrderItem"
 import prisma from "@/lib/prisma"
+import dynamic from "next/dynamic"
+
+// https://stackoverflow.com/a/66374800/
+const OrderItem = dynamic(() => import("./OrderItem"), { ssr: false })
 
 export default async function Orders() {
   const orders = await prisma.order.findMany({

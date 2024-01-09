@@ -15,10 +15,8 @@ docker compose run node npm run seed-db
 
 ## Develop the app
 
-In PowerShell,
-
-```ps
-$Env:NODE_ENV="development"; docker compose up
+```sh
+NODE_ENV=development docker compose up
 ```
 
 ## Run the app

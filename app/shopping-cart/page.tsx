@@ -1,4 +1,4 @@
-import { ProductItem } from "../../components/ProductItem"
+import ProductItem from "../../components/ProductItem"
 import CheckoutForm from "./CheckoutForm"
 import EditQuantity from "./EditQuantity"
 import RemoveItem from "./RemoveItem"

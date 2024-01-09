@@ -6,11 +6,18 @@ export const enum AUTHENTICATION_ERRORS {
 }
 
 export type UserInput = Omit<User, "id" | "createdAt" | "role">
+
 export type UserSignInInput = Pick<User, "username" | "password">
+
 export type CheckoutInput = { creditCardId: string; couponId: string }
-export type ProductInput = RequiredFieldsOnly<Omit<Prisma.ProductCreateArgs["data"], "images">>
+
+export type ProductInput = RequiredFieldsOnly<Prisma.ProductCreateArgs["data"]>
 
 export type QuantityInput = { quantity: number }
+
+export type CouponInput = { username: string; discountRate: number }
+
+export type ShipOrderResponse = { shippedAt: number }
 
 // https://stackoverflow.com/a/68261391/
 export type RequiredFieldsOnly<T> = {

@@ -2,7 +2,7 @@
 
 import QuantityForm from "@/components/QuantityForm"
 import { QuantityInput } from "@/lib/types"
-import { useRouter } from "next/router"
+import { useRouter } from "next/navigation"
 import { SubmitHandler } from "react-hook-form"
 
 export default function EditQuantity({ productId, quantity }: { productId: number; quantity: number }) {

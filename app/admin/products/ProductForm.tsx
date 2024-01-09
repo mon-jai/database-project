@@ -2,13 +2,13 @@
 
 import { ProductInput } from "@/lib/types"
 import { fileToBase64 } from "@/lib/utils-shared"
-import { Product } from "@prisma/client"
-import { useRouter } from "next/router"
+import { Prisma, Product } from "@prisma/client"
+import { omit } from "lodash-es"
+import { useRouter } from "next/navigation"
 import { ChangeEvent } from "react"
 import { SubmitHandler, UseFormSetValue, useForm } from "react-hook-form"
 
-type ProductFormData = ProductInput & {
-  id: string
+type ProductFormData = Omit<ProductInput, "images"> & {
   image_0: string
   image_1: string
   image_2: string
@@ -24,28 +24,45 @@ function FileInput({
   setValue: UseFormSetValue<ProductFormData>
 }) {
   const onChange = async (event: ChangeEvent<HTMLInputElement>) => {
-    setValue(name, await fileToBase64(event.currentTarget.value as any as File))
+    setValue(name, await fileToBase64(event.currentTarget!.files![0]))
   }
 
   return (
-    <div className="form-group">
-      {image && <img src={image} />}
-      <input className="form-control" type="file" onChange={onChange} />
-      <button onClick={() => setValue(name, "")}>Remove</button>
+    <div className="col-4 d-flex justify-content-stretch">
+      <div className="card p-3 gap-3">
+        {image && <img className="mb-auto" src={image} />}
+        <input className="form-control" type="file" onChange={onChange} />
+        <button onClick={() => setValue(name, "")} className="btn btn-danger">
+          Remove
+        </button>
+      </div>
     </div>
   )
 }
 
 export default function ProductForm({ product }: { product?: Product }) {
-  const { register, setValue, handleSubmit } = useForm<ProductFormData>()
+  const { register, watch, setValue, handleSubmit } = useForm<ProductFormData>({
+    defaultValues: {
+      image_0: product?.images[0],
+      image_1: product?.images[1],
+      image_2: product?.images[2]
+    }
+  })
   const router = useRouter()
 
   const onSubmit: SubmitHandler<ProductFormData> = async data => {
-    const response = await fetch("admin/api/product" + (product !== undefined ? "/" + product.id : ""), {
+    const payload: Prisma.ProductCreateArgs["data"] = {
+      ...omit(data, ["image_0", "image_1", "image_2"]),
+      images: [data.image_0, data.image_1, data.image_2].filter(
+        imageStr => imageStr !== undefined && imageStr.length > 0
+      )
+    }
+
+    const response = await fetch("/admin/api/products" + (product !== undefined ? "/" + product.id : ""), {
       method: "POST",
-      body: JSON.stringify(data)
+      body: JSON.stringify(payload)
     })
-    if (response.status === 200) router.push("/orders")
+    if (response.status === 200) router.push("/admin/products")
   }
 
   return (
@@ -57,12 +74,20 @@ export default function ProductForm({ product }: { product?: Product }) {
 
       <div className="form-group mb-3">
         <label className="form-label">Price</label>
-        <input className="form-control" {...register("price")} defaultValue={product?.price ?? ""} />
+        <input
+          className="form-control"
+          {...register("price", { valueAsNumber: true })}
+          defaultValue={product?.price ?? ""}
+        />
       </div>
 
       <div className="form-group mb-3">
         <label className="form-label">Stock</label>
-        <input className="form-control" {...register("stock")} defaultValue={product?.stock ?? ""} />
+        <input
+          className="form-control"
+          {...register("stock", { valueAsNumber: true })}
+          defaultValue={product?.stock ?? ""}
+        />
       </div>
 
       <div className="form-group mb-3">
@@ -75,9 +100,19 @@ export default function ProductForm({ product }: { product?: Product }) {
         <input className="form-control" {...register("category")} defaultValue={product?.category ?? ""} />
       </div>
 
-      <FileInput name="image_0" image={product?.images[0]} setValue={setValue} />
-      <FileInput name="image_1" image={product?.images[1]} setValue={setValue} />
-      <FileInput name="image_2" image={product?.images[2]} setValue={setValue} />
+      <div className="form-group mb-3">
+        <label className="form-label">Images</label>
+
+        <div className="row">
+          {(["image_0", "image_1", "image_2"] as const).map(imageName => (
+            <FileInput name={imageName} image={watch(imageName)} setValue={setValue} key={imageName} />
+          ))}
+        </div>
+      </div>
+
+      <button className="btn btn-success" type="submit">
+        {product === undefined ? "Create" : "Update"}
+      </button>
     </form>
   )
 }

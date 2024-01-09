@@ -1,4 +1,5 @@
 import prisma from "@/lib/prisma"
+import { ShipOrderResponse } from "@/lib/types"
 import { getUserFromSession } from "@/lib/utils"
 
 export async function POST(_request: Request, { params: { id: orderIdString } }: { params: { id: string } }) {
@@ -10,5 +11,5 @@ export async function POST(_request: Request, { params: { id: orderIdString } }:
 
   await prisma.order.update({ data: { shippedAt }, where: { id: orderId } })
 
-  return Response.json({ shippedAt: shippedAt.getTime().toString() })
+  return Response.json({ shippedAt: shippedAt.getTime() } satisfies ShipOrderResponse)
 }
