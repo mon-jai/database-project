@@ -2,7 +2,7 @@
 
 import { redirect } from "next/navigation"
 
-export default function ({ productId }: { productId: number }) {
+export default function TEMP({ productId }: { productId: number }) {
   return (
     <button
       className="btn btn-danger"

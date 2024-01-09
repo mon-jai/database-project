@@ -32,14 +32,3 @@ export async function getUserFromSession<T extends Prisma.UserSelect>(props: T =
   return prisma.user.findFirst({ select: props, where: { username } })
 }
 
-export function discountRateToString(discountRate: number) {
-  return `${Math.round((1 - discountRate) * 100)}% off`
-}
-
-export const fileToBase64 = (file: File) =>
-  new Promise<string>((resolve, reject) => {
-    const reader = new FileReader()
-    reader.readAsDataURL(file)
-    reader.onload = () => resolve(reader.result as string)
-    reader.onerror = reject
-  })

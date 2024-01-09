@@ -4,7 +4,7 @@ import QuantityInput, { QuantityInputValues } from "@/components/QuantityInput"
 import { redirect } from "next/navigation"
 import { SubmitHandler } from "react-hook-form"
 
-export default function ({ productId, quantity }: { productId: number; quantity: number }) {
+export default function TEMP({ productId, quantity }: { productId: number; quantity: number }) {
   const onSubmit: SubmitHandler<QuantityInputValues> = async ({ quantity }) => {
     const response = await fetch(`api/shopping-cart/${productId}`, {
       method: "POST",

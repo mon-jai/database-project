@@ -1,5 +1,5 @@
 // TODO
 
-export default function () {
+export default function TEMP() {
   return <div>Admin / Coupons</div>
 }

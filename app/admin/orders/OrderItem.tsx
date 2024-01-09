@@ -1,7 +1,7 @@
 "use client"
 
 import { ProductItem } from "@/components/ProductItem"
-import { discountRateToString } from "@/lib/utils"
+import { discountRateToString } from "@/lib/utils-shared"
 import { Coupon, Order, OrderItem, Product } from "@prisma/client"
 import { useState } from "react"
 

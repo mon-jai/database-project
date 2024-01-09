@@ -1,7 +1,7 @@
 "use client"
 
 import type { User } from ".prisma/client"
-import { fileToBase64 } from "@/lib/utils"
+import { fileToBase64 } from "@/lib/utils-shared"
 import { redirect } from "next/navigation"
 import { SubmitHandler, useForm } from "react-hook-form"
 

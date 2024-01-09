@@ -1,7 +1,7 @@
 "use client"
 
 import { RequiredFieldsOnly } from "@/lib/types"
-import { fileToBase64 } from "@/lib/utils"
+import { fileToBase64 } from "@/lib/utils-shared"
 import { Prisma } from "@prisma/client"
 import { redirect } from "next/navigation"
 import { ChangeEvent } from "react"
@@ -36,7 +36,7 @@ function FileInput({
   )
 }
 
-export default function ({ product }: { product?: ProductInput }) {
+export default function TEMP({ product }: { product?: ProductInput }) {
   const { register, setValue, handleSubmit } = useForm<ProductInput>()
 
   const onSubmit: SubmitHandler<ProductInput> = async data => {

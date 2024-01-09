@@ -14,7 +14,7 @@ const creditCardNoToString = (creditCardNo: string) =>
     .filter(Boolean)
     .join("-")
 
-export default function ({
+export default function TEMP({
   address,
   creditCards,
   coupons

@@ -1,6 +1,7 @@
 import { ProductItem } from "@/components/ProductItem"
 import prisma from "@/lib/prisma"
-import { discountRateToString, getUserFromSession } from "@/lib/utils"
+import { discountRateToString } from "@/lib/utils-shared"
+import { getUserFromSession } from "@/lib/utils"
 import { redirect } from "next/navigation"
 
 export default async function () {
