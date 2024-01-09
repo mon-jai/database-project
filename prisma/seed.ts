@@ -5,7 +5,7 @@ import { fileURLToPath } from "url"
 import { Prisma } from "@prisma/client"
 
 import prisma from "../lib/prisma.js"
-import _products from "./products.json"
+import _products from "./products.json" with { "type": "json" }
 
 try {
   const products = _products as any as Prisma.ProductUncheckedCreateInput[]
