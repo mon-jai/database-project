@@ -6,7 +6,6 @@ export const fileToBase64 = (file: File) =>
     reader.onerror = reject
   })
 
-  
 export function discountRateToString(discountRate: number) {
   return `${Math.round((1 - discountRate) * 100)}% off`
 }

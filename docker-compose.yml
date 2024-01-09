@@ -9,7 +9,11 @@ services:
     volumes:
       - .:/app
     working_dir: /app
-    command: npm run dev
+    command: |-
+      sh -c "if [ '${NODE_ENV}' = 'development' ];
+        then npm run dev
+        else npm run start
+      fi"
 
   postgres:
     image: postgres:16
@@ -30,27 +34,16 @@ services:
       timeout: 2s
       retries: 20
 
-  pgadmin:
-    image: dpage/pgadmin4:8
-    restart: unless-stopped
-    env_file: .env
-    ports:
-      - "5050:80"
-    volumes:
-      - pgadmin-data:/var/lib/pgadmin
-      # https://stackoverflow.com/a/63318968/
-      - ./servers.json:/pgadmin4/servers.json
-
-  metabase:
-    image: metabase/metabase:latest
-    env_file: .env
-    ports:
-      - ${METABASE_PORT}:3000
-    healthcheck:
-      test: curl --fail -I http://localhost:${METABASE_PORT}/api/health || exit 1
-      interval: 15s
-      timeout: 5s
-      retries: 5
+  # pgadmin:
+  #   image: dpage/pgadmin4:8
+  #   restart: unless-stopped
+  #   env_file: .env
+  #   ports:
+  #     - "5050:80"
+  #   volumes:
+  #     - pgadmin-data:/var/lib/pgadmin
+  #     # https://stackoverflow.com/a/63318968/
+  #     - ./servers.json:/pgadmin4/servers.json
 
 volumes:
   postgres-data:

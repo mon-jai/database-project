@@ -1,9 +1,8 @@
 "use client"
 
+import { QuantityInput } from "@/lib/types"
 import { MouseEventHandler } from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
-
-export type QuantityInputValues = { quantity: number }
 
 const ArithmeticButton = ({ label, onClick }: { label: string; onClick: MouseEventHandler }) => (
   <div
@@ -15,7 +14,7 @@ const ArithmeticButton = ({ label, onClick }: { label: string; onClick: MouseEve
   </div>
 )
 
-export default function QuantityInput({
+export default function QuantityForm({
   label,
   className,
   quantity = 1,
@@ -24,9 +23,9 @@ export default function QuantityInput({
   label: string
   className?: string
   quantity?: number
-  onSubmit: SubmitHandler<QuantityInputValues>
+  onSubmit: SubmitHandler<QuantityInput>
 }) {
-  const { register, handleSubmit, setValue, getValues } = useForm<QuantityInputValues>({ defaultValues: { quantity } })
+  const { register, handleSubmit, setValue, getValues } = useForm<QuantityInput>({ defaultValues: { quantity } })
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={`d-flex justify-content-end ${className ?? ""}`}>

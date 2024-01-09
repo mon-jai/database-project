@@ -1,11 +1,10 @@
 "use client"
 
+import { CheckoutInput } from "@/lib/types"
 import { Coupon, CreditCard } from "@prisma/client"
-import { redirect } from "next/navigation"
+import { useRouter } from "next/router"
 import { InputHTMLAttributes } from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
-
-type CheckoutInput = { creditCardId: string; couponId: string }
 
 // https://stackoverflow.com/a/50955590/
 const creditCardNoToString = (creditCardNo: string) =>
@@ -24,6 +23,7 @@ export default function TEMP({
   coupons: (Coupon & { _count: { order: number } })[]
 }) {
   const { register, handleSubmit } = useForm<CheckoutInput>()
+  const router = useRouter()
 
   const CouponInput = ({
     couponId,
@@ -47,7 +47,7 @@ export default function TEMP({
         ...(data.couponId !== "null" ? { couponId: parseInt(data.couponId) } : {})
       })
     })
-    if (response.status === 200) redirect("/orders")
+    if (response.status === 200) router.push("/orders")
   }
 
   return (

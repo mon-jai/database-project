@@ -1,14 +1,17 @@
 "use client"
 
-import QuantityInput, { QuantityInputValues } from "@/components/QuantityInput"
-import { redirect } from "next/navigation"
+import QuantityForm from "@/components/QuantityForm"
+import { QuantityInput } from "@/lib/types"
+import { useRouter } from "next/router"
 import { SubmitHandler } from "react-hook-form"
 
 export default function TEMP({ productId }: { productId: number }) {
-  const onSubmit: SubmitHandler<QuantityInputValues> = async ({ quantity }) => {
+  const router = useRouter()
+
+  const onSubmit: SubmitHandler<QuantityInput> = async ({ quantity }) => {
     const response = await fetch("api/shopping-cart", { method: "POST", body: JSON.stringify({ productId, quantity }) })
-    if (response.status === 200) redirect("/orders")
+    if (response.status === 200) router.push("/orders")
   }
 
-  return <QuantityInput label="Add to cart" onSubmit={onSubmit} />
+  return <QuantityForm label="Add to cart" onSubmit={onSubmit} />
 }

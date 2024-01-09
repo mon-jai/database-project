@@ -31,4 +31,3 @@ export async function getUserFromSession<T extends Prisma.UserSelect>(props: T =
 
   return prisma.user.findFirst({ select: props, where: { username } })
 }
-

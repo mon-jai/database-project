@@ -1,28 +1,28 @@
 "use client"
 
-import type { User } from ".prisma/client"
+import { UserInput } from "@/lib/types"
 import { fileToBase64 } from "@/lib/utils-shared"
-import { redirect } from "next/navigation"
+import { useRouter } from "next/router"
 import { SubmitHandler, useForm } from "react-hook-form"
 
-type UserToCreate = Omit<User, "id" | "createdAt" | "role">
-type UserInput = UserToCreate & { avatar: FileList }
+type UserFormData = UserInput & { avatar: FileList }
 
 export default function App() {
   const {
     register,
     handleSubmit,
     formState: { errors }
-  } = useForm<UserInput>()
+  } = useForm<UserFormData>()
+  const router = useRouter()
 
-  const onSubmit: SubmitHandler<UserInput> = async data => {
-    const user: UserToCreate = {
+  const onSubmit: SubmitHandler<UserFormData> = async data => {
+    const user: UserInput = {
       ...data,
       avatar: await fileToBase64(data.avatar[0])
     }
 
     const response = await fetch("api/users", { method: "POST", body: JSON.stringify(user) })
-    if (response.status === 200) redirect("/")
+    if (response.status === 200) router.push("/")
   }
 
   return (

@@ -1,27 +1,27 @@
 "use client"
 
-import { RequiredFieldsOnly } from "@/lib/types"
+import { ProductInput } from "@/lib/types"
 import { fileToBase64 } from "@/lib/utils-shared"
-import { Prisma } from "@prisma/client"
-import { redirect } from "next/navigation"
+import { Product } from "@prisma/client"
+import { useRouter } from "next/router"
 import { ChangeEvent } from "react"
 import { SubmitHandler, UseFormSetValue, useForm } from "react-hook-form"
 
-type ProductInput = RequiredFieldsOnly<Omit<Prisma.ProductCreateArgs["data"], "images">> & {
+type ProductFormData = ProductInput & {
   id: string
+  image_0: string
   image_1: string
   image_2: string
-  image_3: string
 }
 
 function FileInput({
-  setValue,
   name,
-  image
+  image,
+  setValue
 }: {
-  setValue: UseFormSetValue<ProductInput>
-  name: keyof ProductInput
-  image: string
+  name: keyof ProductFormData
+  image?: string
+  setValue: UseFormSetValue<ProductFormData>
 }) {
   const onChange = async (event: ChangeEvent<HTMLInputElement>) => {
     setValue(name, await fileToBase64(event.currentTarget.value as any as File))
@@ -36,15 +36,16 @@ function FileInput({
   )
 }
 
-export default function TEMP({ product }: { product?: ProductInput }) {
-  const { register, setValue, handleSubmit } = useForm<ProductInput>()
+export default function TEMP({ product }: { product?: Product }) {
+  const { register, setValue, handleSubmit } = useForm<ProductFormData>()
+  const router = useRouter()
 
-  const onSubmit: SubmitHandler<ProductInput> = async data => {
+  const onSubmit: SubmitHandler<ProductFormData> = async data => {
     const response = await fetch("admin/api/product" + (product !== undefined ? "/" + product.id : ""), {
       method: "POST",
       body: JSON.stringify(data)
     })
-    if (response.status === 200) redirect("/orders")
+    if (response.status === 200) router.push("/orders")
   }
 
   return (
@@ -74,7 +75,9 @@ export default function TEMP({ product }: { product?: ProductInput }) {
         <input className="form-control" {...register("category")} defaultValue={product?.category ?? ""} />
       </div>
 
-
+      <FileInput name="image_0" image={product?.images[0]} setValue={setValue} />
+      <FileInput name="image_1" image={product?.images[1]} setValue={setValue} />
+      <FileInput name="image_2" image={product?.images[2]} setValue={setValue} />
     </form>
   )
 }
