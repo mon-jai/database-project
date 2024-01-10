@@ -32,9 +32,9 @@ function FileInput({
       <div className="card p-3 gap-3">
         {image && <img className="mb-auto" src={image} />}
         <input className="form-control" type="file" onChange={onChange} />
-        <button onClick={() => setValue(name, "")} className="btn btn-danger">
+        <div onClick={() => setValue(name, "")} className="btn btn-danger">
           Remove
-        </button>
+        </div>
       </div>
     </div>
   )

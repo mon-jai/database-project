@@ -41,7 +41,7 @@ export default function CheckoutForm({
         ...(data.couponId !== "null" ? { couponId: parseInt(data.couponId) } : {})
       })
     })
-    if (response.status === 200) router.push("/orders")
+    if (response.status === 200) window.location.href = "/orders"
   }
 
   return (

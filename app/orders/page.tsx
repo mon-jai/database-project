@@ -16,7 +16,7 @@ export default async function Orders() {
 
   return (
     <>
-      <h1 className="mb-3">Admin / Orders</h1>
+      <h1 className="mb-3">Orders</h1>
 
       {orders.map(order => (
         <ol key={order.id} className="list-group mb-3">
@@ -30,8 +30,6 @@ export default async function Orders() {
               </div>
             </div>
             <div className="d-flex flex-column">
-              <button className="btn btn-success">Mark as shipped</button>
-
               <span className="text-success fs-3">
                 $
                 {Math.round(

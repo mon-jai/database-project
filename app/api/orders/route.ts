@@ -30,5 +30,7 @@ export async function POST(request: Request) {
     await prisma.product.update({ data: { stock: { decrement: 1 } }, where: { id: item.product.id } })
   }
 
+  await prisma.shoppingCart.deleteMany({ where: { customerUserId: userId } })
+
   return new Response()
 }
