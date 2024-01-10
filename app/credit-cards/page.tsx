@@ -1,6 +1,7 @@
 import CreditCardForm from "./CreditCardForm"
 import DeleteCreditCardButton from "./DeleteCreditCardButton"
 import prisma from "@/lib/prisma"
+import { creditCardNoToString } from "@/lib/utils-common"
 import { getUserFromSession } from "@/lib/utils-node"
 import { redirect } from "next/navigation"
 
@@ -22,7 +23,7 @@ export default async function CreditCards() {
         {creditCards.map(creditCard => (
           <div key={creditCard.id} className="list-group-item d-flex align-items-center">
             <div className="me-auto">
-              <div className="fw-bold text-body text-decoration-none">{creditCard.cardNo}</div>
+              <div className="fw-bold text-body text-decoration-none">{creditCardNoToString(creditCard.cardNo)}</div>
               <div className="text-secondary">
                 {creditCard.expirationMonth}/{creditCard.expirationYear}
               </div>

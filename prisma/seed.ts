@@ -27,10 +27,10 @@ try {
   // https://stackoverflow.com/a/18508719/
   const tableNames = (
     await prisma.$queryRaw<{ relname: string }[]>`
-    SELECT pg_class.relname
-    FROM pg_class INNER JOIN pg_attribute ON pg_attribute.attrelid = pg_class.oid
-    WHERE pg_attribute.attname = 'id' AND pg_class.relkind = 'r'
-  `
+      SELECT pg_class.relname
+      FROM pg_class INNER JOIN pg_attribute ON pg_attribute.attrelid = pg_class.oid
+      WHERE pg_attribute.attname = 'id' AND pg_class.relkind = 'r'
+    `
   ).map(({ relname }) => relname)
   // https://github.com/prisma/prisma/discussions/5256#discussioncomment-1191352
   for (const tableName of tableNames) {

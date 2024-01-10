@@ -10,7 +10,7 @@ export default function DeleteCreditCardButton({ id }: { id: number }) {
       className="btn btn-danger"
       onClick={async () => {
         const response = await fetch(`api/credit-cards/${id}`, { method: "DELETE" })
-        if (response.status === 200) router.push(".")
+        if (response.status === 200) window.location.reload()
       }}
     >
       Remove
