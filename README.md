@@ -44,7 +44,7 @@ $Env:NODE_ENV="development"; docker compose up
 
 ## Run the app in production
 
-1. Edit the `POSTGRES_PASSWORD`, `IRON_SESSION_PASSWORD` and `PGADMIN_DEFAULT_PASSWORD` in the `.env` file with your own credentials
+1. Replace `POSTGRES_PASSWORD`, `IRON_SESSION_PASSWORD` and `PGADMIN_DEFAULT_PASSWORD` with your own credentials in the `.env` file
 
 2. In PowerShell,
 
