@@ -31,6 +31,7 @@ function NavbarButton(props: { label: string; href: string } & ({ icon: string }
         color: "inherit",
         textDecoration: "none"
       }}
+      prefetch={false}
     >
       {iconNode}
       <div>{props.label}</div>

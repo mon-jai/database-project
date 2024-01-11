@@ -53,7 +53,6 @@ export default function UserForm({
         <label className="form-label">Avatar</label>
         <input
           {...register("avatar", { required: user === undefined })}
-          defaultValue={user?.avatar ?? ""}
           className="form-control"
           type="file"
         />

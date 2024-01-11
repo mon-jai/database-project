@@ -9,7 +9,7 @@ export default async function Coupons() {
 
   return (
     <>
-      <h1 className="mb-3">Coupons</h1>
+      <h1 className="mb-3">Admin / Coupons</h1>
 
       <ol className="list-group">
         {coupons.map(coupon => (
