@@ -24,6 +24,10 @@ try {
     .split("\n")
   for (const sql of sqlStatements) await prisma.$executeRawUnsafe(sql)
 
+  // `setval` sometime causes error when running right after other seeding operations
+  await prisma.$disconnect()
+  await prisma.$connect()
+
   // https://stackoverflow.com/a/18508719/
   const tableNames = (
     await prisma.$queryRaw<{ relname: string }[]>`
