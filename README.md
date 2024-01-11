@@ -24,7 +24,7 @@ On a Windows machine,
    docker compose run node npm run seed-db
    ```
 
-## Develop the app
+## Development
 
 In PowerShell,
 
@@ -38,7 +38,7 @@ $Env:NODE_ENV="development"; docker compose up
   username: admin\
   password: admin
 
-- User account with demo data\
+- User account with dummy data\
   username: mon.jai.tw\
   password: testpass
 
